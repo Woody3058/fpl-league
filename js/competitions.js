@@ -73,27 +73,88 @@ function calculatePeriodCompetition(season, players, scores) {
                 // DOES THIS PERIOD HAVE ANY SCORES?
                 // ==========================================
 
-                const hasScores = scores.some(score => score.gameweek >= period.startGameweek && score.gameweek <= period.endGameweek);
+                const hasScores =
+                    periodPlayers.some(
+                        player =>
+                            scores.some(
+                                score =>
+
+                                    score.playerId ===
+                                        player.playerId &&
+
+                                    score.gameweek >=
+                                        period.startGameweek &&
+
+                                    score.gameweek <=
+                                        period.endGameweek
+
+                            )
+                    );
+
+
+                // ==========================================
+                // DOES THIS PERIOD HAVE ANY ACTUAL POINTS?
+                // ==========================================
+
+                const hasPoints =
+                    periodPlayers.some(
+                        player =>
+                            player.points !== 0
+                    );
+
 
                 // ==========================================
                 // FIND WINNER(S)
                 // ==========================================
 
-                if (hasScores) {
-                    const highestPoints = Math.max(...periodPlayers.map(player => player.points));
+                if (
+                    hasScores &&
+                    hasPoints
+                ) {
 
-                    const winners = periodPlayers.filter(player => player.points === highestPoints);
+                    const highestPoints =
+                        Math.max(
+                            ...periodPlayers.map(
+                                player =>
+                                    player.points
+                            )
+                        );
 
-                    const pointsPerWinner = 1 / winners.length;
 
-                    periodPlayers.forEach(player => {
-                            if (player.points === highestPoints) {
-                                player.won = true;
-                                player.periodPoints = pointsPerWinner;
+                    const winners =
+                        periodPlayers.filter(
+                            player =>
+                                player.points ===
+                                highestPoints
+                        );
+
+
+                    const pointsPerWinner =
+                        1 /
+                        winners.length;
+
+
+                    periodPlayers.forEach(
+                        player => {
+
+                            if (
+                                player.points ===
+                                highestPoints
+                            ) {
+
+                                player.won =
+                                    true;
+
+                                player.periodPoints =
+                                    pointsPerWinner;
+
                             }
+
                         }
                     );
+
                 }
+
 
                 // ==========================================
                 // RETURN PERIOD
