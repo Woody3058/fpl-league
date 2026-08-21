@@ -64,39 +64,23 @@
 
 async function startup() {
 
+    console.log("Starting application...");
+
     try {
-
-        console.log(
-            "Starting application..."
-        );
-
 
         await loadSeasonData();
 
+        document.getElementById("seasonTitle").textContent = `${appData.season.name} — Gameweek ${appData.season.currentGameweek}`;
 
-        document
-            .getElementById(
-                "seasonTitle"
-            )
-            .textContent =
-            `${appData.season.name} — Gameweek ${appData.season.currentGameweek}`;
+        console.log("Gameweek = ", appData.season.currentGameweek);
 
+        const competitionData = loadPeriodCompetition();
 
-        const competitionData =
-            loadPeriodCompetition();
-
-
-        renderCurrentPeriod(
-            competitionData.competition
-        );
-
+        renderCurrentPeriod(competitionData.competition);
 
         renderOverallLeague();
 
-
-        renderCompetition(
-            competitionData.competition
-        );
+        renderCompetition(competitionData.competition);
 
 
         console.log(

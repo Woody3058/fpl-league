@@ -459,3 +459,66 @@ button:hover {
     white-space: nowrap;
 
 }
+
+.fpl-import-status {
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+}
+
+.fpl-import-player {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+}
+
+.fpl-import-icon {
+    width: 22px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.fpl-import-success {
+    font-weight: 500;
+}
+
+.fpl-import-failed {
+    font-weight: 500;
+}
+
+.fpl-import-retry {
+    font-style: italic;
+}
+
+.fpl-spinner {
+
+    display: inline-block;
+
+    width: 14px;
+    height: 14px;
+
+    margin-right: 8px;
+
+    border: 2px solid currentColor;
+
+    border-right-color: transparent;
+
+    border-radius: 50%;
+
+    vertical-align: -2px;
+
+    animation:
+        fpl-spin 0.8s linear infinite;
+
+}
+
+
+@keyframes fpl-spin {
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}

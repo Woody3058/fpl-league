@@ -3,34 +3,14 @@ const appData = {season: null, players: [], scores: [], competitionPeriods: []};
 
 async function loadSeasonData() {
 
-    console.log(
-        "data.js: loadSeasonData Called"
-    );
+    console.log("data.js: loadSeasonData Called");
 
+    appData.season = await getActiveSeason();
 
-    appData.season =
-        await getActiveSeason();
-
-
-    const [
-        players,
-        scores,
-        competitionPeriods
-    ] =
-        await Promise.all([
-
-            getSeasonPlayers(
-                appData.season.id
-            ),
-
-            getSeasonScores(
-                appData.season.id
-            ),
-
-            getCompetitionPeriods(
-                appData.season.id
-            )
-
+    const [players, scores, competitionPeriods] = await Promise.all([
+            getSeasonPlayers(appData.season.id),
+            getSeasonScores(appData.season.id),
+            getCompetitionPeriods(appData.season.id)
         ]);
 
 
@@ -55,57 +35,34 @@ async function loadSeasonData() {
 
 async function getActiveSeason() {
 
-    console.log(
-        "data.js: getActiveSeason Called"
-    );
+    console.log("data.js: getActiveSeason Called");
 
-
-    const {
-        data,
-        error
-    } =
+    const {data, error} =
         await supabaseClient
             .from("seasons")
             .select("*")
-            .eq(
-                "active",
-                true
-            )
+            .eq("active", true)
             .single();
 
-
     if (error) {
-
         console.error(
             "Error loading active season:",
             error
         );
-
         throw error;
-
     }
 
-
     return {
-
         id:
-            data.id,
-
-        seasonCode:
+            data.id, seasonCode:
             data.season_code,
-
         name:
-            data.name,
-
-        totalGameweeks:
+            data.name, totalGameweeks:
             data.total_gameweeks,
-
         currentGameweek:
             data.current_gameweek,
-
         active:
             data.active
-
     };
 
 }
