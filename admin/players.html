@@ -1,0 +1,242 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        FPL Admin - Players
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="admin-header">
+
+    <h1>
+        FPL League Admin
+    </h1>
+
+    <button
+        id="logoutButton"
+        type="button"
+    >
+        Logout
+    </button>
+
+</header>
+
+
+<nav class="admin-navigation">
+
+    <a
+        href="scores.html"
+        id="scoresNavLink"
+    >
+        Scores
+    </a>
+
+    <a
+        href="players.html"
+        id="playersNavLink"
+    >
+        Players
+    </a>
+
+    <a
+        href="seasons.html"
+        id="seasonsNavLink"
+    >
+        Seasons
+    </a>
+
+</nav>
+
+
+<main class="admin-main">
+
+
+    <section class="admin-panel">
+
+        <div class="admin-panel-header">
+
+        <h2>
+            Player Management -
+            <span id="playerSeasonName"></span>
+        </h2>
+
+        </div>
+
+        <!-- ==================================
+        ADD PLAYER
+        ================================== -->
+
+    <div class="player-add-controls">
+
+        <button
+            id="showAddPlayerButton"
+            type="button"
+        >
+            + Add Player
+        </button>
+
+    </div>
+
+
+    <section
+        id="playerAddSection"
+        class="player-add-section"
+        hidden
+    >
+
+        <h3>
+            Add Player
+        </h3>
+
+
+        <div class="form-row">
+
+            <label
+                for="newPlayerName"
+            >
+                Name
+            </label>
+
+            <input
+                type="text"
+                id="newPlayerName"
+            >
+
+        </div>
+
+
+        <div class="form-row">
+
+            <label
+                for="newPlayerFplId"
+            >
+                FPL Entry ID
+            </label>
+
+            <input
+                type="number"
+                id="newPlayerFplId"
+            >
+
+        </div>
+
+
+        <div class="form-row">
+
+            <label
+                for="newPlayerTeamName"
+            >
+                FPL Team Name
+            </label>
+
+            <input
+                type="text"
+                id="newPlayerTeamName"
+            >
+
+        </div>
+
+
+        <button
+            id="addPlayerButton"
+            type="button"
+        >
+            Save Player
+        </button>
+
+
+        <div
+            id="playerMessage"
+        >
+        </div>
+
+    </section>
+
+
+        <!-- ==================================
+             PLAYER TABLE
+             ================================== -->
+
+        <div class="table-container">
+
+            <table
+                id="playerManagementTable"
+            >
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Player
+                        </th>
+
+                        <th>
+                            FPL Entry ID
+                        </th>
+
+                        <th>
+                            FPL Team Name
+                        </th>
+
+                        <th>
+                            Active
+                        </th>
+
+                        <th>
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+<script src="../js/supabase.js"></script>
+
+<script src="js/admin-common.js"></script>
+
+<script src="js/admin-data.js"></script>
+
+<script src="js/players.js"></script>
+
+
+</body>
+
+</html>

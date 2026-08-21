@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FPL League Admin</title>
+
+    <link
+        rel="stylesheet"
+        href="../css/style.css">
+</head>
+
+<body>
+    <header>
+        <h1>FA Cuck FPL League</h1>
+        <div>Administration</div>
+    </header>
+
+    <main>
+        <!-- LOGIN -->
+        <section id="loginSection">
+
+            <h2>Administrator Login</h2>
+
+            <form id="loginForm">
+                <div class="form-group">
+
+                    <label for="email">
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        id="password"
+                        required>
+                </div>
+
+                <button type="submit">
+                    Login
+                </button>
+            </form>
+
+            <div
+                id="loginError"
+                class="error"
+            ></div>
+        </section>
+
+        <!-- ADMIN -->
+        <section
+            id="adminSection"
+            style="display:none;">
+
+            <div class="admin-header">
+                <h2>Admin Dashboard</h2>
+
+                <button id="logoutButton">
+                    Logout
+                </button>
+            </div>
+
+            <div id="adminContent">
+                <p>
+                    Loading administration data...
+                </p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="../js/supabase.js"></script>
+    <script src="admin.js"></script>
+
+</body>
+
+</html>

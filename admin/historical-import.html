@@ -1,0 +1,269 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        FPL Admin - Historical Import
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="css/admin.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<header class="admin-header">
+
+    <h1>
+        FPL League Admin
+    </h1>
+
+    <button
+        id="logoutButton"
+        type="button"
+    >
+        Logout
+    </button>
+
+</header>
+
+
+<nav class="admin-navigation">
+
+    <a
+        href="scores.html"
+        id="scoresNavLink"
+    >
+        Scores
+    </a>
+
+    <a
+        href="players.html"
+        id="playersNavLink"
+    >
+        Players
+    </a>
+
+    <a
+        href="seasons.html"
+        id="seasonsNavLink"
+    >
+        Seasons
+    </a>
+
+</nav>
+
+
+<main class="admin-main">
+
+
+    <section class="admin-panel">
+
+        <div class="admin-panel-header">
+
+            <div class="admin-panel-title">
+
+                <h2>
+                    Historical Score Import
+                </h2>
+
+                <p class="page-description">
+                    Select a historical season and Excel file,
+                    preview the scores, confirm the player mapping,
+                    then import the period totals.
+                </p>
+
+            </div>
+
+
+            <a href="seasons.html">
+                Back to Seasons
+            </a>
+
+        </div>
+
+
+        <!-- ==================================
+             IMPORT CONTROLS
+             ================================== -->
+
+        <section class="historical-import-controls">
+
+            <div class="form-row">
+
+                <label
+                    for="historicalSeasonSelector"
+                >
+                    Season
+                </label>
+
+                <select
+                    id="historicalSeasonSelector"
+                >
+                </select>
+
+            </div>
+
+
+            <div class="form-row">
+
+                <label
+                    for="historicalScoreFile"
+                >
+                    Excel File
+                </label>
+
+                <input
+                    type="file"
+                    id="historicalScoreFile"
+                    accept=".xlsx,.xls"
+                >
+
+            </div>
+
+
+            <button
+                id="previewHistoricalButton"
+                type="button"
+            >
+                Preview Import
+            </button>
+
+
+            <div
+                id="historicalImportMessage"
+            >
+            </div>
+
+        </section>
+
+
+        <!-- ==================================
+             PLAYER MAPPING
+             ================================== -->
+
+        <section
+            id="historicalPlayerMappingSection"
+            style="display:none;"
+        >
+
+            <h3>
+                Player Mapping
+            </h3>
+
+
+            <div class="table-container">
+
+                <table
+                    id="historicalPlayerMappingTable"
+                >
+
+                    <thead>
+
+                        <tr>
+
+                            <th>
+                                Excel Player
+                            </th>
+
+                            <th>
+                                Database Player
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==================================
+             SCORE PREVIEW
+             ================================== -->
+
+        <section
+            id="historicalScorePreviewSection"
+            style="display:none;"
+        >
+
+            <h3>
+                Score Preview
+            </h3>
+
+
+            <div class="table-container">
+
+                <table
+                    id="historicalScorePreviewTable"
+                >
+
+                    <thead>
+                    </thead>
+
+                    <tbody>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <button
+                id="importHistoricalButton"
+                type="button"
+            >
+                Import Historical Scores
+            </button>
+
+        </section>
+
+
+    </section>
+
+
+</main>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+<!-- SheetJS - required for reading Excel files -->
+<script
+    src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"
+></script>
+
+<script src="../js/supabase.js"></script>
+
+<script src="js/admin-common.js"></script>
+
+<script src="js/admin-data.js"></script>
+
+<script src="js/historical-import.js"></script>
+
+
+</body>
+
+</html>
