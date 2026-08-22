@@ -104,12 +104,22 @@ function calculatePeriodCompetition(season, players, scores) {
 
 
                 // ==========================================
+                // HAS THE PERIOD FINISHED?
+                // ==========================================
+
+                const periodCompleted =
+                    season.currentGameweek >
+                    period.endGameweek;
+
+
+                // ==========================================
                 // FIND WINNER(S)
                 // ==========================================
 
                 if (
                     hasScores &&
-                    hasPoints
+                    hasPoints &&
+                    periodCompleted
                 ) {
 
                     const highestPoints =
@@ -240,15 +250,3 @@ function loadPeriodCompetition() {
             competition
     };
 }
-
-/*function loadPeriodCompetition() {
-
-    console.log("competition.js: loadPeriodCompetition Called");
-
-    const competition =  calculatePeriodCompetition(season, players, scores);
-
-    return {
-        season,
-        competition
-    };
-}*/

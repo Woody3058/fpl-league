@@ -1,67 +1,4 @@
 
-/*async function startup() {
-
-    try {
-        console.log("Starting application...");
-
-        await loadSeasonData();
-
-        document
-            .getElementById("seasonTitle")
-                .textContent =
-                `${appData.season.name} — Gameweek ${appData.season.currentGameweek}`;
-
-        // ==========================================
-        // LOAD COMPETITION DATA
-        // ==========================================
-
-        const competitionData = await loadPeriodCompetition();
-
-        if (!competitionData) {
-            throw new Error(
-                "Unable to load competition data"
-            );
-        }
-
-        const competition = competitionData.competition;
-
-        // ==========================================
-        // RENDER PUBLIC PAGES
-        // ==========================================
-
-        renderCurrentPeriod(competition);
-        renderOverallLeague();
-        renderCompetition(competition);
-
-        console.log("Application started successfully.");
-    }
-
-    catch(error) {
-
-        console.error("Application startup failed:", error);
-
-        document.body.innerHTML = `
-            <div style="
-                padding:40px;
-                font-family:Arial;
-            ">
-                <h1>Unable to load league</h1>
-
-                <p>
-                    There was a problem connecting
-                    to the league database.
-                </p>
-
-                <p>
-                    Check the browser console
-                    for details.
-                </p>
-
-            </div>
-        `;
-    }
-}*/
-
 async function startup() {
 
     console.log("Starting application...");
@@ -220,7 +157,7 @@ function renderCompetition(competition) {
         else if (
             status === "current"
         ) {
-            statusText = "Current";
+            statusText = "In Progress";
         }
 
         headingHTML += `
@@ -242,7 +179,7 @@ function renderCompetition(competition) {
 
     headingHTML += `
             <th>
-                Total
+                Period Wins
             </th>
         </tr>
     `;
@@ -335,7 +272,7 @@ function renderCompetition(competition) {
             if (periodPlayer.won) {
 
                 html += `
-                    <td class="ompetition-winner competition-cell-${periodStatus}">
+                    <td class="Competition-winner competition-cell-${periodStatus}">
                         <strong>
                             ${periodPlayer.points} pts
                         </strong>
@@ -436,7 +373,7 @@ function renderCurrentPeriod(competition) {
 
     info.innerHTML = `
         <h3>
-            After Game Week ${appData.season.currentGameweek}
+            Gameweek ${appData.season.currentGameweek}
         </h3>
 
         <p>
@@ -449,15 +386,5 @@ function renderCurrentPeriod(competition) {
         </p>
     `;
 }
-
-/*unction getRankedPosition(value, index, previousValue, previousPosition) {
-
-    console.log("app.js: getRankedPosition Called");
-
-    if (previousValue !== null && value === previousValue) {
-        return previousPosition;
-    }
-    return index + 1;
-}*/
 
 startup();

@@ -251,6 +251,31 @@ th:last-child {
 
 }
 
+.period-in-progress {
+
+    display:
+        block;
+
+    margin-top:
+        3px;
+
+    font-size:
+        10px;
+
+    font-weight:
+        500;
+
+    text-transform:
+        none;
+
+    white-space:
+        nowrap;
+
+    opacity:
+        0.7;
+
+}
+
 /* ==========================================
    PERIOD CELLS
    ========================================== */
@@ -519,6 +544,295 @@ button:hover {
 
     to {
         transform: rotate(360deg);
+    }
+
+}
+
+/* ==========================================
+   RULES & PRIZES
+   ========================================== */
+
+.rules-section {
+
+    width:
+        min(
+            1200px,
+            calc(100% - 32px)
+        );
+
+    margin:
+        30px auto 50px;
+
+}
+
+
+.page-heading {
+
+    margin-bottom:
+        24px;
+
+}
+
+
+.page-heading h2 {
+
+    margin-bottom:
+        8px;
+
+}
+
+
+.page-heading p {
+
+    margin:
+        0;
+
+    color:
+        #666;
+
+}
+
+
+.rules-panel {
+
+    margin-bottom:
+        24px;
+
+    padding:
+        22px;
+
+    background:
+        white;
+
+    border-radius:
+        10px;
+
+    box-shadow:
+        0 2px 8px
+        rgba(
+            0,
+            0,
+            0,
+            0.06
+        );
+
+}
+
+
+.rules-panel h3 {
+
+    margin-top:
+        0;
+
+}
+
+
+.prize-pot {
+
+    margin:
+        12px 0;
+
+    font-size:
+        42px;
+
+    font-weight:
+        700;
+
+}
+
+
+.rules-note {
+
+    color:
+        #666;
+
+}
+
+
+.prize-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap:
+        18px;
+
+}
+
+
+.prize-card {
+
+    padding:
+        20px;
+
+    border:
+        1px solid #ddd;
+
+    border-radius:
+        8px;
+
+}
+
+
+.prize-card h4 {
+
+    margin:
+        0 0 12px;
+
+}
+
+
+.prize-percentage {
+
+    font-size:
+        16px;
+
+    font-weight:
+        600;
+
+    color:
+        #666;
+
+}
+
+
+.prize-value {
+
+    margin:
+        6px 0 14px;
+
+    font-size:
+        30px;
+
+    font-weight:
+        700;
+
+}
+
+
+.period-rules-grid {
+
+    display:
+        grid;
+
+    grid-template-columns:
+        repeat(
+            5,
+            minmax(
+                0,
+                1fr
+            )
+        );
+
+    gap:
+        10px;
+
+    margin:
+        18px 0 24px;
+
+}
+
+
+.period-rules-grid div {
+
+    display:
+        flex;
+
+    flex-direction:
+        column;
+
+    gap:
+        4px;
+
+    padding:
+        12px;
+
+    text-align:
+        center;
+
+    border:
+        1px solid #ddd;
+
+    border-radius:
+        6px;
+
+}
+
+
+.period-rules-grid span {
+
+    font-size:
+        13px;
+
+    color:
+        #666;
+
+}
+
+
+.rules-list {
+
+    padding-left:
+        22px;
+
+    line-height:
+        1.6;
+
+}
+
+
+.rules-list li {
+
+    margin-bottom:
+        8px;
+
+}
+
+
+/* ==========================================
+   RULES - MOBILE
+   ========================================== */
+
+@media (
+    max-width: 700px
+) {
+
+    .prize-grid {
+
+        grid-template-columns:
+            1fr;
+
+    }
+
+
+    .period-rules-grid {
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(
+                    0,
+                    1fr
+                )
+            );
+
+    }
+
+
+    .prize-pot {
+
+        font-size:
+            34px;
+
     }
 
 }
