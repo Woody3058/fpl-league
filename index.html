@@ -2,143 +2,323 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0">
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>FA Cuck FPL League</title>
+    <title>
+        FA Cuck FPL League
+    </title>
 
     <link
         rel="stylesheet"
-        href="css/style.css">
+        href="css/style.css"
+    >
+
 </head>
+
 
 <body>
 
-    <header>
-        <h1>FA Cuck FPL League</h1>
-        <div id="seasonTitle"></div>
-    </header>
 
-    <main>
-        <nav class="main-navigation">
-            <a
-                href="index.html"
-                class="active">
-                Current Season
-            </a>
+<header>
 
-            <a
-                href="history.html">
-                Historical Seasons
-            </a>
+    <h1>
+        FA Cuck FPL League
+    </h1>
 
-            <a href="rules.html">
-                Rules & Prizes
-            </a>
-        </nav>
+    <div id="seasonTitle">
+    </div>
 
-        <section id="currentPeriodCard">
-            <h2>League Standings</h2>
-
-            <div id="currentPeriodInfo"></div>
-        </section>
-
-        <section>
-            <h2>Overall League</h2>
-
-            <div class="table-container">
-                <table id="overallTable">
-                    <thead>
-                        <tr>
-                            <th>Pos</th>
-                            <th>Player</th>
-                            <th>Total</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </section>
-
-        <section>
-            <h2>Gameweek Period Competition</h2>
-
-            <div class="table-container">
-                <table id="competitionTable">
-                    <thead>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-        </section>
-
-        <section class="season-prize-leaders">
-
-            <h2>
-                Season Prize Leaders
-            </h2>
-
-            <div class="season-prize-leader-grid">
-
-                <article class="season-prize-leader-card">
-
-                    <h3>
-                        Highest Scoring Gameweek
-                    </h3>
-
-                    <strong
-                        id="highestGameweekLeader"
-                    >
-                        —
-                    </strong>
-
-                    <span
-                        id="highestGameweekDetails"
-                    >
-                        —
-                    </span>
-
-                </article>
+</header>
 
 
-                <article class="season-prize-leader-card">
+<main>
 
-                    <h3>
-                        Best Captain Pick
-                    </h3>
 
-                    <strong
-                        id="captainPrizeLeader"
-                    >
-                        —
-                    </strong>
+    <!-- ==================================
+         NAVIGATION
+         ================================== -->
 
-                    <span
-                        id="captainPrizeDetails"
-                    >
-                        —
-                    </span>
+    <nav class="main-navigation">
 
-                    <small class="season-prize-note">
-                        Triple Captain selections are excluded from this prize.
-                    </small>
+        <a
+            href="index.html"
+            class="active"
+        >
+            Current Season
+        </a>
 
-                </article>
+        <a
+            href="history.html"
+        >
+            Historical Seasons
+        </a>
 
-            </div>
+        <a
+            href="rules.html"
+        >
+            Rules & Prizes
+        </a>
 
-        </section>
-    </main>
+    </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/league.js"></script>
-    <script src="js/competitions.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/app.js"></script>
+
+    <!-- ==================================
+         PRIZE TRACKER
+         ================================== -->
+
+    <section class="season-prize-leaders">
+
+        <h2>
+            Prize Tracker
+        </h2>
+
+
+        <div class="season-prize-leader-grid">
+
+
+            <!-- ==================================
+                 OVERALL LEADER
+                 ================================== -->
+
+            <article class="season-prize-leader-card">
+
+                <h3>
+                    Overall Leader
+                </h3>
+
+                <strong
+                    id="overallPrizeLeader"
+                >
+                    —
+                </strong>
+
+                <span
+                    id="overallPrizeDetails"
+                >
+                    —
+                </span>
+
+                <small class="season-prize-note">
+                    Current overall league leader.
+                </small>
+
+            </article>
+
+
+            <!-- ==================================
+                 CURRENT PERIOD LEADER
+                 ================================== -->
+
+            <article class="season-prize-leader-card">
+
+                <h3>
+                    Current Period Leader
+                </h3>
+
+                <strong
+                    id="periodPrizeLeader"
+                >
+                    —
+                </strong>
+
+                <span
+                    id="periodPrizeDetails"
+                >
+                    —
+                </span>
+
+                <small class="season-prize-note">
+                    Current leader for the active
+                    Gameweek Period.
+                </small>
+
+            </article>
+
+
+            <!-- ==================================
+                 HIGHEST SCORING GAMEWEEK
+                 ================================== -->
+
+            <article class="season-prize-leader-card">
+
+                <h3>
+                    Highest Scoring Gameweek
+                </h3>
+
+                <strong
+                    id="highestGameweekLeader"
+                >
+                    —
+                </strong>
+
+                <span
+                    id="highestGameweekDetails"
+                >
+                    —
+                </span>
+
+                <small class="season-prize-note">
+                    Highest individual Gameweek
+                    score this season.
+                </small>
+
+            </article>
+
+
+            <!-- ==================================
+                 BEST CAPTAIN PICK
+                 ================================== -->
+
+            <article class="season-prize-leader-card">
+
+                <h3>
+                    Best Captain Pick
+                </h3>
+
+                <strong
+                    id="captainPrizeLeader"
+                >
+                    —
+                </strong>
+
+                <span
+                    id="captainPrizeDetails"
+                >
+                    —
+                </span>
+
+                <small class="season-prize-note">
+                    Triple Captain selections are
+                    excluded from this prize.
+                </small>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================
+         CURRENT PERIOD
+         ================================== -->
+
+    <section id="currentPeriodCard">
+
+        <h2>
+            League Standings
+        </h2>
+
+        <div id="currentPeriodInfo">
+        </div>
+
+    </section>
+
+
+    <!-- ==================================
+         OVERALL LEAGUE
+         ================================== -->
+
+    <section>
+
+        <h2>
+            Overall League
+        </h2>
+
+
+        <div class="table-container">
+
+            <table id="overallTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Pos
+                        </th>
+
+                        <th>
+                            Player
+                        </th>
+
+                        <th>
+                            Total
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================
+         GAMEWEEK PERIOD COMPETITION
+         ================================== -->
+
+    <section>
+
+        <h2>
+            Gameweek Period Competition
+        </h2>
+
+
+        <div class="table-container">
+
+            <table id="competitionTable">
+
+                <thead>
+                </thead>
+
+                <tbody>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- ==================================
+     SCRIPTS
+     ================================== -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+<script src="js/supabase.js"></script>
+
+<script src="js/data.js"></script>
+
+<script src="js/league.js"></script>
+
+<script src="js/competitions.js"></script>
+
+<script src="js/utils.js"></script>
+
+<script src="js/app.js"></script>
+
 
 </body>
 

@@ -21,7 +21,9 @@ async function startup() {
             competitionData.competition
         );
 
-        renderSeasonPrizeLeaders();
+        renderSeasonPrizeLeaders(
+            competitionData.competition
+        );
 
 
         console.log(
@@ -391,302 +393,518 @@ function renderCurrentPeriod(competition) {
     `;
 }
 
-function renderSeasonPrizeLeaders() {
+function renderSeasonPrizeLeaders(
+    competition
+) {
 
     console.log(
         "app.js: renderSeasonPrizeLeaders Called"
     );
 
 
-    const leaderElement =
+    // ==========================================
+    // OVERALL LEADER
+    // ==========================================
+
+    const overallLeaderElement =
+        document.getElementById(
+            "overallPrizeLeader"
+        );
+
+
+    const overallDetailsElement =
+        document.getElementById(
+            "overallPrizeDetails"
+        );
+
+
+    if (
+        overallLeaderElement &&
+        overallDetailsElement
+    ) {
+
+        const playerTotals =
+            appData.players.map(
+                player => {
+
+                    const total =
+                        appData.scores
+                            .filter(
+                                score =>
+                                    score.playerId ===
+                                    player.id
+                            )
+                            .reduce(
+                                (
+                                    sum,
+                                    score
+                                ) =>
+                                    sum +
+                                    score.points,
+                                0
+                            );
+
+
+                    return {
+
+                        playerId:
+                            player.id,
+
+                        playerName:
+                            player.name,
+
+                        points:
+                            total
+
+                    };
+
+                }
+            );
+
+
+        const highestOverallPoints =
+            Math.max(
+                ...playerTotals.map(
+                    player =>
+                        player.points
+                )
+            );
+
+
+        if (
+            highestOverallPoints <= 0
+        ) {
+
+            overallLeaderElement.textContent =
+                "—";
+
+
+            overallDetailsElement.textContent =
+                "No scores yet";
+
+        }
+        else {
+
+            const overallLeaders =
+                playerTotals.filter(
+                    player =>
+                        player.points ===
+                        highestOverallPoints
+                );
+
+
+            const names =
+                overallLeaders.map(
+                    player =>
+                        player.playerName
+                );
+
+
+            overallLeaderElement.textContent =
+                names.length > 1
+                    ? `Tied: ${names.join(" / ")}`
+                    : names[0] ?? "—";
+
+
+            overallDetailsElement.textContent =
+                `${highestOverallPoints} points`;
+
+        }
+
+    }
+
+
+    // ==========================================
+    // CURRENT PERIOD LEADER
+    // ==========================================
+
+    const periodLeaderElement =
+        document.getElementById(
+            "periodPrizeLeader"
+        );
+
+
+    const periodDetailsElement =
+        document.getElementById(
+            "periodPrizeDetails"
+        );
+
+
+    if (
+        periodLeaderElement &&
+        periodDetailsElement
+    ) {
+
+        const currentPeriod =
+            competition.periods.find(
+                period =>
+
+                    appData.season.currentGameweek >=
+                        period.startGameweek &&
+
+                    appData.season.currentGameweek <=
+                        period.endGameweek
+            );
+
+
+        if (!currentPeriod) {
+
+            periodLeaderElement.textContent =
+                "—";
+
+
+            periodDetailsElement.textContent =
+                "No active period";
+
+        }
+        else {
+
+            const periodPlayers =
+                currentPeriod.players ??
+                [];
+
+
+            if (
+                periodPlayers.length === 0
+            ) {
+
+                periodLeaderElement.textContent =
+                    "—";
+
+
+                periodDetailsElement.textContent =
+                    `P${currentPeriod.period} — No scores yet`;
+
+            }
+            else {
+
+                const highestPeriodPoints =
+                    Math.max(
+                        ...periodPlayers.map(
+                            player =>
+                                Number(
+                                    player.points
+                                ) || 0
+                        )
+                    );
+
+
+                if (
+                    highestPeriodPoints <= 0
+                ) {
+
+                    periodLeaderElement.textContent =
+                        "—";
+
+
+                    periodDetailsElement.textContent =
+                        `P${currentPeriod.period} — No scores yet`;
+
+                }
+                else {
+
+                    const periodLeaders =
+                        periodPlayers.filter(
+                            player =>
+                                (
+                                    Number(
+                                        player.points
+                                    ) || 0
+                                ) ===
+                                highestPeriodPoints
+                        );
+
+
+                    const names =
+                        periodLeaders.map(
+                            player =>
+                                player.playerName
+                        );
+
+
+                    periodLeaderElement.textContent =
+                        names.length > 1
+                            ? `Tied: ${names.join(" / ")}`
+                            : names[0] ?? "—";
+
+
+                    periodDetailsElement.textContent =
+                        `P${currentPeriod.period} — ` +
+                        `${highestPeriodPoints} points`;
+
+                }
+
+            }
+
+        }
+
+    }
+
+
+    // ==========================================
+    // HIGHEST SCORING GAMEWEEK
+    // ==========================================
+
+    const highestGameweekLeaderElement =
         document.getElementById(
             "highestGameweekLeader"
         );
 
 
-    const detailsElement =
+    const highestGameweekDetailsElement =
         document.getElementById(
             "highestGameweekDetails"
         );
 
 
     if (
-        !leaderElement ||
-        !detailsElement
+        highestGameweekLeaderElement &&
+        highestGameweekDetailsElement
     ) {
 
-        return;
-
-    }
-
-
-    // ==========================================
-    // FIND HIGHEST GAMEWEEK SCORE
-    // ==========================================
-
-    let highestPoints =
-        null;
+        let highestPoints =
+            null;
 
 
-    let leaders =
-        [];
+        let leaders =
+            [];
 
 
-    appData.scores.forEach(
-        score => {
-
-            const points =
-                Number(
-                    score.points
-                ) || 0;
-
-            if (points <= 0)
-                return;
-
-
-            if (
-                highestPoints === null ||
-                points > highestPoints
-            ) {
-
-                highestPoints =
-                    points;
-
-
-                leaders = [
-                    score
-                ];
-
-            }
-            else if (
-                points === highestPoints
-            ) {
-
-                leaders.push(
-                    score
-                );
-
-            }
-
-        }
-    );
-
-
-    // ==========================================
-    // NO SCORES
-    // ==========================================
-
-    if (
-        highestPoints === null ||
-        leaders.length === 0
-    ) {
-
-        leaderElement.textContent =
-            "—";
-
-
-        detailsElement.textContent =
-            "No gameweek scores yet";
-
-
-        return;
-
-    }
-
-
-    // ==========================================
-    // PLAYER NAMES
-    // ==========================================
-
-    const names =
-        leaders.map(
+        appData.scores.forEach(
             score => {
 
-                const player =
-                    appData.players.find(
-                        player =>
-                            player.id ===
-                            score.playerId
+                const points =
+                    Number(
+                        score.points
+                    ) || 0;
+
+
+                if (
+                    points <= 0
+                ) {
+
+                    return;
+
+                }
+
+
+                if (
+                    highestPoints === null ||
+                    points >
+                        highestPoints
+                ) {
+
+                    highestPoints =
+                        points;
+
+
+                    leaders = [
+                        score
+                    ];
+
+                }
+                else if (
+                    points ===
+                    highestPoints
+                ) {
+
+                    leaders.push(
+                        score
                     );
 
-
-                return (
-                    player?.name ??
-                    "Unknown"
-                );
+                }
 
             }
         );
 
 
-    // ==========================================
-    // GAMEWEEKS
-    // ==========================================
+        if (
+            highestPoints === null ||
+            leaders.length === 0
+        ) {
 
-    const gameweeks =
-        [
-            ...new Set(
+            highestGameweekLeaderElement.textContent =
+                "—";
+
+
+            highestGameweekDetailsElement.textContent =
+                "No gameweek scores yet";
+
+        }
+        else {
+
+            const names =
                 leaders.map(
-                    score =>
-                        score.gameweek
-                )
-            )
-        ];
+                    score => {
+
+                        const player =
+                            appData.players.find(
+                                player =>
+                                    player.id ===
+                                    score.playerId
+                            );
 
 
-    // ==========================================
-    // DISPLAY
-    // ==========================================
-
-    leaderElement.textContent =
-        names.length > 1
-            ? `Tied: ${names.join(" / ")}`
-            : names[0];
-
-
-    detailsElement.textContent =
-        `${highestPoints} points — ` +
-        gameweeks
-            .map(
-                gameweek =>
-                    `GW${gameweek}`
-            )
-            .join(
-                " / "
-            );
-
-
-
-
-
-
-
-
-            // ==========================================
-            // BEST CAPTAIN PICK
-            // ==========================================
-
-            const captainLeaderElement =
-                document.getElementById(
-                    "captainPrizeLeader"
-                );
-
-
-            const captainDetailsElement =
-                document.getElementById(
-                    "captainPrizeDetails"
-                );
-
-
-            if (
-                !captainLeaderElement ||
-                !captainDetailsElement
-            ) {
-
-                return;
-
-            }
-
-
-            let highestCaptainPoints =
-                null;
-
-
-            let captainLeaders =
-                [];
-
-
-            appData.scores.forEach(
-                score => {
-
-                    // --------------------------------------
-                    // NO CAPTAIN DATA
-                    // --------------------------------------
-
-                    if (
-                        score.captainPoints === null ||
-                        score.captainMultiplier === null
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    // --------------------------------------
-                    // EXCLUDE TRIPLE CAPTAIN
-                    // --------------------------------------
-
-                    if (
-                        score.captainMultiplier === 3
-                    ) {
-
-                        return;
-
-                    }
-
-
-                    const captainPoints =
-                        Number(
-                            score.captainPoints
-                        ) || 0;
-
-
-                    if (
-                        highestCaptainPoints === null ||
-                        captainPoints >
-                            highestCaptainPoints
-                    ) {
-
-                        highestCaptainPoints =
-                            captainPoints;
-
-
-                        captainLeaders = [
-                            score
-                        ];
-
-                    }
-                    else if (
-                        captainPoints ===
-                        highestCaptainPoints
-                    ) {
-
-                        captainLeaders.push(
-                            score
+                        return (
+                            player?.name ??
+                            "Unknown"
                         );
 
                     }
+                );
+
+
+            const gameweeks =
+                [
+                    ...new Set(
+                        leaders.map(
+                            score =>
+                                score.gameweek
+                        )
+                    )
+                ];
+
+
+            highestGameweekLeaderElement.textContent =
+                names.length > 1
+                    ? `Tied: ${names.join(" / ")}`
+                    : names[0];
+
+
+            highestGameweekDetailsElement.textContent =
+                `${highestPoints} points — ` +
+                gameweeks
+                    .map(
+                        gameweek =>
+                            `GW${gameweek}`
+                    )
+                    .join(
+                        " / "
+                    );
+
+        }
+
+    }
+
+
+    // ==========================================
+    // BEST CAPTAIN PICK
+    // ==========================================
+
+    const captainLeaderElement =
+        document.getElementById(
+            "captainPrizeLeader"
+        );
+
+
+    const captainDetailsElement =
+        document.getElementById(
+            "captainPrizeDetails"
+        );
+
+
+    if (
+        captainLeaderElement &&
+        captainDetailsElement
+    ) {
+
+        let highestCaptainPoints =
+            null;
+
+
+        let captainLeaders =
+            [];
+
+
+        appData.scores.forEach(
+            score => {
+
+                // --------------------------------------
+                // NO CAPTAIN DATA
+                // --------------------------------------
+
+                if (
+                    score.captainPoints === null ||
+                    score.captainMultiplier === null
+                ) {
+
+                    return;
 
                 }
-            );
 
 
-            // ==========================================
-            // NO CAPTAIN DATA
-            // ==========================================
+                // --------------------------------------
+                // EXCLUDE TRIPLE CAPTAIN
+                // --------------------------------------
 
-            if (
-                highestCaptainPoints === null ||
-                captainLeaders.length === 0
-            ) {
+                if (
+                    score.captainMultiplier === 3
+                ) {
 
-                captainLeaderElement.textContent =
-                    "—";
+                    return;
 
-
-                captainDetailsElement.textContent =
-                    "No captain data yet";
+                }
 
 
-                return;
+                const captainPoints =
+                    Number(
+                        score.captainPoints
+                    ) || 0;
+
+
+                if (
+                    captainPoints <= 0
+                ) {
+
+                    return;
+
+                }
+
+
+                if (
+                    highestCaptainPoints === null ||
+                    captainPoints >
+                        highestCaptainPoints
+                ) {
+
+                    highestCaptainPoints =
+                        captainPoints;
+
+
+                    captainLeaders = [
+                        score
+                    ];
+
+                }
+                else if (
+                    captainPoints ===
+                    highestCaptainPoints
+                ) {
+
+                    captainLeaders.push(
+                        score
+                    );
+
+                }
 
             }
+        );
 
 
-            // ==========================================
-            // BUILD LEADER DISPLAY
-            // ==========================================
+        if (
+            highestCaptainPoints === null ||
+            captainLeaders.length === 0
+        ) {
+
+            captainLeaderElement.textContent =
+                "—";
+
+
+            captainDetailsElement.textContent =
+                "No captain data yet";
+
+        }
+        else {
 
             const captainLeaderNames =
                 captainLeaders.map(
@@ -735,6 +953,11 @@ function renderSeasonPrizeLeaders() {
 
             captainDetailsElement.textContent =
                 captainDetails;
-            }
+
+        }
+
+    }
+
+}
 
 startup();
