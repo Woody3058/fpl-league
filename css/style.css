@@ -26,6 +26,100 @@ main {
     padding: 0 20px;
 }
 
+.main-navigation {
+
+    display:
+        flex;
+
+    justify-content:
+        center;
+
+    align-items:
+        center;
+
+    gap:
+        18px;
+
+    margin-bottom:
+        28px;
+
+    padding:
+        18px;
+
+    background:
+        white;
+
+    border-bottom:
+        1px solid #ddd;
+
+}
+
+
+.main-navigation a {
+
+    display:
+        block;
+
+    padding:
+        12px 18px;
+
+    border-radius:
+        6px;
+
+    color:
+        #3f003f;
+
+    font-weight:
+        700;
+
+    text-decoration:
+        none;
+
+    white-space:
+        nowrap;
+
+}
+
+
+.main-navigation a.active {
+
+    background:
+        #3f003f;
+
+    color:
+        white;
+
+}
+
+@media (
+    max-width: 700px
+) {
+
+    .main-navigation {
+
+        flex-wrap:
+            wrap;
+
+        gap:
+            8px;
+
+    }
+
+
+    .main-navigation a {
+
+        padding:
+            10px 12px;
+
+    }
+
+}
+
+
+
+
+
+
 section {
     background: white;
     margin-bottom: 30px;
@@ -423,7 +517,7 @@ strong {
 
 /* ----------------------------------- HISTORY ----------------------------------- */
 
-.main-navigation {
+/*.main-navigation {
     display: flex;
     justify-content: center;
     gap: 8px;
@@ -444,7 +538,7 @@ strong {
 .main-navigation a.active {
     background: #37003c;
     color: white;
-}
+}*/
 
 .page-header {    
     justify-content: space-between;
@@ -475,7 +569,7 @@ strong {
 
 /* ------------------------------------ ADMIN ------------------------------------ */
 
-.form-group {
+/*.form-group {
     margin-bottom: 15px;
 }
 
@@ -666,7 +760,7 @@ button:hover {
         transform: rotate(360deg);
     }
 
-}
+}*/
 
 /* ==========================================
    RULES & PRIZES

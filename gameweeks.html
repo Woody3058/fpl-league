@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +12,7 @@
     >
 
     <title>
-        FA Cuck FPL League
+        FA Cuck FPL League - Gameweeks
     </title>
 
     <link
@@ -31,7 +32,7 @@
         FA Cuck FPL League
     </h1>
 
-    <div id="seasonTitle">
+    <div id="gameweekSeasonTitle">
     </div>
 
 </header>
@@ -47,14 +48,14 @@
 
             <a
                 href="index.html"
-                class="nav-current active"
+                class="nav-current"
             >
                 Current Season
             </a>
 
             <a
                 href="gameweeks.html"
-                class="nav-gameweeks"
+                class="nav-gameweeks active"
             >
                 Gameweeks
             </a>
@@ -77,15 +78,41 @@
 
 
     <!-- ==================================
-         PRIZE TRACKER
+         GAMEWEEK SELECTOR
+         ================================== -->
+
+    <section>
+
+        <div class="page-header">
+
+            <h2>
+                Gameweek Summary
+            </h2>
+
+
+            <div>
+
+                <label
+                    for="gameweekSummarySelector"
+                >
+                    Gameweek:
+                </label>
+
+                <select id="gameweekSummarySelector">
+                </select>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- ==================================
+         GAMEWEEK HIGHLIGHTS
          ================================== -->
 
     <section class="season-prize-leaders">
-
-        <h2>
-            Prize Tracker
-        </h2>
-
 
         <div class="season-prize-leader-grid">
 
@@ -93,19 +120,36 @@
             <article class="season-prize-leader-card">
 
                 <h3>
-                    Overall Leader
+                    Top Scorer
                 </h3>
 
-                <strong id="overallPrizeLeader">
+                <strong id="gameweekTopScorer">
                     —
                 </strong>
 
-                <span id="overallPrizeDetails">
+                <span id="gameweekTopScorerDetails">
+                    —
+                </span>
+
+            </article>
+
+
+            <article class="season-prize-leader-card">
+
+                <h3>
+                    Best Captain
+                </h3>
+
+                <strong id="gameweekBestCaptain">
+                    —
+                </strong>
+
+                <span id="gameweekBestCaptainDetails">
                     —
                 </span>
 
                 <small class="season-prize-note">
-                    Current overall league leader.
+                    Triple Captain selections are excluded.
                 </small>
 
             </article>
@@ -114,21 +158,16 @@
             <article class="season-prize-leader-card">
 
                 <h3>
-                    Current Period Leader
+                    Biggest Mover
                 </h3>
 
-                <strong id="periodPrizeLeader">
+                <strong id="gameweekBiggestMover">
                     —
                 </strong>
 
-                <span id="periodPrizeDetails">
+                <span id="gameweekBiggestMoverDetails">
                     —
                 </span>
-
-                <small class="season-prize-note">
-                    Current score for the active
-                    Gameweek Period.
-                </small>
 
             </article>
 
@@ -136,43 +175,16 @@
             <article class="season-prize-leader-card">
 
                 <h3>
-                    Highest Scoring Gameweek
+                    Gameweek
                 </h3>
 
-                <strong id="highestGameweekLeader">
+                <strong id="gameweekSelectedNumber">
                     —
                 </strong>
 
-                <span id="highestGameweekDetails">
-                    —
+                <span>
+                    Selected gameweek
                 </span>
-
-                <small class="season-prize-note">
-                    Highest individual Gameweek
-                    score this season.
-                </small>
-
-            </article>
-
-
-            <article class="season-prize-leader-card">
-
-                <h3>
-                    Best Captain Pick
-                </h3>
-
-                <strong id="captainPrizeLeader">
-                    —
-                </strong>
-
-                <span id="captainPrizeDetails">
-                    —
-                </span>
-
-                <small class="season-prize-note">
-                    Triple Captain selections are
-                    excluded from this prize.
-                </small>
 
             </article>
 
@@ -183,21 +195,19 @@
 
 
     <!-- ==================================
-         OVERALL LEAGUE
+         GAMEWEEK RESULTS
          ================================== -->
 
     <section>
 
         <h2>
-            Overall League —
-            <span id="overallLeagueGameweek">
-            </span>
+            Gameweek Results
         </h2>
 
 
         <div class="table-container">
 
-            <table id="overallTable">
+            <table id="gameweekResultsTable">
 
                 <thead>
 
@@ -212,40 +222,25 @@
                         </th>
 
                         <th>
-                            Total
+                            GW Points
+                        </th>
+
+                        <th>
+                            Overall
+                        </th>
+
+                        <th>
+                            Move
+                        </th>
+
+                        <th>
+                            Captain
                         </th>
 
                     </tr>
 
                 </thead>
 
-                <tbody>
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </section>
-
-
-    <!-- ==================================
-         GAMEWEEK PERIOD COMPETITION
-         ================================== -->
-
-    <section>
-
-        <h2>
-            Gameweek Period Competition
-        </h2>
-
-
-        <div class="table-container">
-
-            <table id="competitionTable">
-
-                <thead>
-                </thead>
 
                 <tbody>
                 </tbody>
@@ -260,20 +255,14 @@
 </main>
 
 
-<!-- ==================================
-     SCRIPTS
-     ================================== -->
-
 <script
     src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
 ></script>
 
 <script src="js/supabase.js?v=1.2"></script>
 <script src="js/data.js?v=1.2"></script>
-<script src="js/league.js?v=1.2"></script>
-<script src="js/competitions.js?v=1.2"></script>
 <script src="js/utils.js?v=1.2"></script>
-<script src="js/app.js?v=1.2"></script>
+<script src="js/gameweeks.js?v=1.2"></script>
 
 
 </body>
