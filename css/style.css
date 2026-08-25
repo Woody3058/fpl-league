@@ -515,6 +515,14 @@ strong {
 
 }
 
+/* ---------------------------------- GAMEWEEKS ---------------------------------- */
+
+#gameweekSummarySelector {
+    padding: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
 /* ----------------------------------- HISTORY ----------------------------------- */
 
 /*.main-navigation {
