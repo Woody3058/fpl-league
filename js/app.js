@@ -9,11 +9,16 @@ async function startup() {
 
         document.getElementById("seasonTitle").textContent = `${appData.season.name} — Gameweek ${appData.season.currentGameweek}`;
 
+        document
+            .getElementById(
+                "overallLeagueGameweek"
+            )
+            .textContent =
+                `Gameweek ${appData.season.currentGameweek}`;
+
         console.log("Gameweek = ", appData.season.currentGameweek);
 
         const competitionData = loadPeriodCompetition();
-
-        renderCurrentPeriod(competitionData.competition);
 
         renderOverallLeague();
 
@@ -73,7 +78,7 @@ function renderOverallLeague() {
             row.innerHTML = `
                 <td>
                     ${isLeader
-                        ? `🏆 ${position}`
+                        ? `${position}`
                         : position
                     }
                 </td>
@@ -102,33 +107,70 @@ function renderOverallLeague() {
     );
 }
 
-function renderCompetition(competition) {
+function renderCompetition(
+    competition
+) {
 
-    console.log("app.js: renderCompetition Called");
+    console.log(
+        "app.js: renderCompetition Called"
+    );
 
-    const table = document.querySelector("#competitionTable");
+
+    const table =
+        document.querySelector(
+            "#competitionTable"
+        );
+
 
     if (!table) {
-        console.error("competitionTable not found");
+
+        console.error(
+            "competitionTable not found"
+        );
+
         return;
+
     }
 
-    const thead = table.querySelector("thead");
-    const tbody = table.querySelector("tbody");
 
-    if (!thead || !tbody) {
-        console.error("Competition table head/body not found");
+    const thead =
+        table.querySelector(
+            "thead"
+        );
+
+
+    const tbody =
+        table.querySelector(
+            "tbody"
+        );
+
+
+    if (
+        !thead ||
+        !tbody
+    ) {
+
+        console.error(
+            "Competition table head/body not found"
+        );
+
         return;
+
     }
 
-    tbody.innerHTML = "";
+
+    tbody.innerHTML =
+        "";
+
 
     // ==========================================
     // TABLE HEADINGS
     // ==========================================
 
     let headingHTML = `
+
         <tr>
+
             <th>
                 Pos
             </th>
@@ -136,187 +178,475 @@ function renderCompetition(competition) {
             <th>
                 Player
             </th>
+
     `;
 
-    competition.periods.forEach(period => {
 
-        let status = "future";
+    competition.periods.forEach(
+        period => {
 
-        if (
-            appData.season.currentGameweek > period.endGameweek
-        ) {
-            status = "completed";
+            let status =
+                "future";
+
+
+            if (
+                appData.season.currentGameweek >
+                period.endGameweek
+            ) {
+
+                status =
+                    "completed";
+
+            }
+            else if (
+                appData.season.currentGameweek >=
+                period.startGameweek
+            ) {
+
+                status =
+                    "current";
+
+            }
+
+
+            let statusText =
+                "Future";
+
+
+            if (
+                status ===
+                "completed"
+            ) {
+
+                statusText =
+                    "Completed";
+
+            }
+            else if (
+                status ===
+                "current"
+            ) {
+
+                statusText =
+                    "In Progress";
+
+            }
+
+
+            headingHTML += `
+
+                <th
+                    class="competition-period-${status}"
+                >
+
+                    P${period.period}
+
+                    <br>
+
+                    <small>
+                        GW${period.startGameweek} – ${period.endGameweek}
+                    </small>
+
+                    <br>
+
+                    <span
+                        class="competition-period-status"
+                    >
+                        ${statusText}
+                    </span>
+
+                </th>
+
+            `;
+
         }
+    );
 
-        else if (
-            appData.season.currentGameweek >= period.startGameweek
-        ) {
-            status = "current";
-        }
-
-        let statusText = "Future";
-
-        if (status === "completed") {
-            statusText = "Completed";
-        }
-
-        else if (
-            status === "current"
-        ) {
-            statusText = "In Progress";
-        }
-
-        headingHTML += `
-            <th class="competition-period-${status}">
-                P${period.period}
-
-                <br>
-                <small>
-                    GW${period.startGameweek} – ${period.endGameweek}
-                </small>
-                <br>
-
-                <span class="competition-period-status">
-                    ${statusText}
-                </span>
-            </th>
-        `;
-    });
 
     headingHTML += `
+
             <th>
                 Period Wins
             </th>
+
         </tr>
+
     `;
 
-    thead.innerHTML = headingHTML;
+
+    thead.innerHTML =
+        headingHTML;
+
+
+    // ==========================================
+    // FIND CURRENT PERIOD
+    // ==========================================
+
+    const currentPeriodIndex =
+        competition.periods.findIndex(
+            period =>
+
+                appData.season.currentGameweek >=
+                    period.startGameweek &&
+
+                appData.season.currentGameweek <=
+                    period.endGameweek
+        );
+
 
     // ==========================================
     // BUILD PLAYER DATA
     // ==========================================
 
-    const players = [];
+    const players =
+        [];
 
-    competition.runningTotals.forEach(running => {const playerPeriods = competition.periods.map(period => {return (period.players.find(player => player.playerId === running.playerId));});
 
-            players.push({playerId: running.playerId, playerName: running.playerName, total: running.wins, periods: playerPeriods});
+    competition.runningTotals.forEach(
+        running => {
+
+            const playerPeriods =
+                competition.periods.map(
+                    period => {
+
+                        return (
+                            period.players.find(
+                                player =>
+                                    player.playerId ===
+                                    running.playerId
+                            )
+                        );
+
+                    }
+                );
+
+
+            let currentPeriodPoints =
+                0;
+
+
+            if (
+                currentPeriodIndex >= 0
+            ) {
+
+                currentPeriodPoints =
+                    Number(
+                        playerPeriods[
+                            currentPeriodIndex
+                        ]?.points
+                    ) || 0;
+
+            }
+
+
+            players.push({
+
+                playerId:
+                    running.playerId,
+
+                playerName:
+                    running.playerName,
+
+                total:
+                    Number(
+                        running.wins
+                    ) || 0,
+
+                currentPeriodPoints:
+                    currentPeriodPoints,
+
+                periods:
+                    playerPeriods
+
+            });
+
         }
     );
 
+
     // ==========================================
-    // SORT BY COMPETITION TOTAL
+    // SORT PLAYERS
+    // ==========================================
+    //
+    // 1. Period wins
+    // 2. Current period score
+    // 3. Player name
     // ==========================================
 
     players.sort(
-        (a, b) => b.total - a.total
+        (
+            a,
+            b
+        ) => {
+
+            if (
+                b.total !==
+                a.total
+            ) {
+
+                return (
+                    b.total -
+                    a.total
+                );
+
+            }
+
+
+            if (
+                b.currentPeriodPoints !==
+                a.currentPeriodPoints
+            ) {
+
+                return (
+                    b.currentPeriodPoints -
+                    a.currentPeriodPoints
+                );
+
+            }
+
+
+            return (
+                a.playerName.localeCompare(
+                    b.playerName
+                )
+            );
+
+        }
     );
+
 
     // ==========================================
     // RENDER PLAYERS
     // ==========================================
 
-    let previousTotal = null;
-    let previousPosition = 0;
+    let previousPlayer =
+        null;
 
-    players.forEach((player, index) => {const row = document.createElement("tr");
-        
-        const position = getRankedPosition(player.total, index, previousTotal, previousPosition);
 
-        previousTotal = player.total;
-        previousPosition = position;
+    let previousPosition =
+        0;
 
-        const isLeader = position === 1 && player.total > 0;
 
-        // ==================================
-        // BASIC COLUMNS
-        // ==================================
+    players.forEach(
+        (
+            player,
+            index
+        ) => {
 
-        let html = `
-            <td class="competition-position">
-                ${isLeader
-                    ? `${position}`
-                    : position
-                }
-            </td>
+            const row =
+                document.createElement(
+                    "tr"
+                );
 
-            <td class="competition-player">
-                ${player.playerName}
-            </td>
-        `;
 
-        // ==================================
-        // PERIOD COLUMNS
-        // ==================================
+            // ======================================
+            // POSITION
+            // ======================================
 
-        player.periods.forEach((periodPlayer, periodIndex) => {const period = competition.periods[periodIndex];
+            let position =
+                index + 1;
 
-            let periodStatus = "future";
 
-            if (appData.season.currentGameweek > period.endGameweek) {
-                periodStatus = "completed";
-            }
-            else if (appData.season.currentGameweek >= period.startGameweek) {
-                periodStatus = "current";
-            }
+            if (
+                previousPlayer &&
 
-            // No data yet
+                player.total ===
+                    previousPlayer.total &&
 
-            if (!periodPlayer || periodPlayer.points === 0) {
-                html += `
-                    <td class="competition-empty competition-cell-${periodStatus}">
-                        —
-                    </td>
-                `;
-                return;
+                player.currentPeriodPoints ===
+                    previousPlayer.currentPeriodPoints
+            ) {
+
+                position =
+                    previousPosition;
+
             }
 
-            // ==================================
-            // WINNER
-            // ==================================
 
-            if (periodPlayer.won) {
+            previousPlayer =
+                player;
 
-                html += `
-                    <td class="Competition-winner competition-cell-${periodStatus}">
-                        <strong>
-                            ${periodPlayer.points} pts
-                        </strong>
-                    </td>
-                `;
-                return;
-            }
 
-            // ==================================
-            // NORMAL SCORE
-            // ==================================
+            previousPosition =
+                position;
 
-            html += `
-                <td class="competition-score competition-cell-${periodStatus}">
-                    <small>
-                        ${periodPlayer.points}
-                    </small>
+
+            const isLeader =
+                position === 1 &&
+                (
+                    player.total > 0 ||
+                    player.currentPeriodPoints > 0
+                );
+
+
+            // ======================================
+            // BASIC COLUMNS
+            // ======================================
+
+            let html = `
+
+                <td
+                    class="competition-position"
+                >
+                    ${
+                        isLeader
+                            ? `${position}`
+                            : position
+                    }
                 </td>
-            `;
-        });
 
-            // ==================================
-            // RUNNING TOTAL
-            // ==================================
+                <td
+                    class="competition-player"
+                >
+                    ${player.playerName}
+                </td>
+
+            `;
+
+
+            // ======================================
+            // PERIOD COLUMNS
+            // ======================================
+
+            player.periods.forEach(
+                (
+                    periodPlayer,
+                    periodIndex
+                ) => {
+
+                    const period =
+                        competition.periods[
+                            periodIndex
+                        ];
+
+
+                    let periodStatus =
+                        "future";
+
+
+                    if (
+                        appData.season.currentGameweek >
+                        period.endGameweek
+                    ) {
+
+                        periodStatus =
+                            "completed";
+
+                    }
+                    else if (
+                        appData.season.currentGameweek >=
+                        period.startGameweek
+                    ) {
+
+                        periodStatus =
+                            "current";
+
+                    }
+
+
+                    // ==================================
+                    // NO DATA
+                    // ==================================
+
+                    if (
+                        !periodPlayer ||
+                        periodPlayer.points === 0
+                    ) {
+
+                        html += `
+
+                            <td
+                                class="competition-empty competition-cell-${periodStatus}"
+                            >
+                                —
+                            </td>
+
+                        `;
+
+                        return;
+
+                    }
+
+
+                    // ==================================
+                    // PERIOD WINNER
+                    // ==================================
+
+                    if (
+                        periodPlayer.won
+                    ) {
+
+                        html += `
+
+                            <td
+                                class="competition-winner competition-cell-${periodStatus}"
+                            >
+
+                                <strong>
+                                    ${periodPlayer.points} pts
+                                </strong>
+
+                            </td>
+
+                        `;
+
+                        return;
+
+                    }
+
+
+                    // ==================================
+                    // NORMAL / IN-PROGRESS SCORE
+                    // ==================================
+
+                    html += `
+
+                        <td
+                            class="competition-score competition-cell-${periodStatus}"
+                        >
+
+                            <small>
+                                ${periodPlayer.points}
+                            </small>
+
+                        </td>
+
+                    `;
+
+                }
+            );
+
+
+            // ======================================
+            // PERIOD WINS
+            // ======================================
 
             html += `
-                <td class="competition-total">
+
+                <td
+                    class="competition-total"
+                >
+
                     <strong>
                         ${player.total}
                     </strong>
+
                 </td>
+
             `;
+
 
             row.innerHTML =
                 html;
 
-            tbody.appendChild(row);
-    });
+
+            tbody.appendChild(
+                row
+            );
+
+        }
+    );
+
 }
 
 function renderCurrentPeriod(competition) {
@@ -629,7 +959,8 @@ function renderSeasonPrizeLeaders(
 
 
                     periodDetailsElement.textContent =
-                        `P${currentPeriod.period} — ` +
+                        `P${currentPeriod.period}: ` +
+                        `GW${currentPeriod.startGameweek} to ${currentPeriod.endGameweek} · ` +
                         `${highestPeriodPoints} points`;
 
                 }
@@ -939,9 +1270,9 @@ function renderSeasonPrizeLeaders(
                         score => {
 
                             return (
-                                `${score.captainName ?? "Captain"} — ` +
-                                `${score.captainPoints} pts, ` +
-                                `GW${score.gameweek}`
+                                `${score.captainName ?? "Captain"} · ` +
+                                `GW${score.gameweek} · ` +
+                                `${score.captainPoints} points`
                             );
 
                         }

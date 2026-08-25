@@ -339,7 +339,7 @@ strong {
         column;
 
     gap:
-        6px;
+        8px;
 
     padding:
         20px;
@@ -360,6 +360,8 @@ strong {
 
     margin:
         0 0 8px;
+    min-height:
+        58px;
 
 }
 
@@ -376,6 +378,16 @@ strong {
 
     color:
         #666;
+
+}
+
+.season-prize-note {
+
+    margin-top:
+        auto;
+
+    padding-top:
+        12px;
 
 }
 
