@@ -65,7 +65,9 @@
             </h2>
 
             <p>
-                Entry for the season is £50 per player.
+                Entry for the season is
+                <strong id="rulesEntryFee">—</strong>
+                per player.
                 The full prize pot is paid back out through
                 the competitions below.
             </p>
@@ -86,13 +88,19 @@
 
             <p>
                 We currently have
-                <strong>13 players</strong>,
+                <strong>
+                    <span id="rulesPlayerCount">—</span>
+                    players
+                </strong>,
                 giving a total prize pot of:
             </p>
 
 
-            <div class="prize-pot">
-                £650
+            <div
+                id="rulesPrizePot"
+                class="prize-pot"
+            >
+                —
             </div>
 
 
@@ -124,12 +132,18 @@
                         Overall Winner
                     </h4>
 
-                    <div class="prize-percentage">
-                        40%
+                    <div
+                        id="rulesOverallPercent"
+                        class="prize-percentage"
+                    >
+                        —
                     </div>
 
-                    <div class="prize-value">
-                        £260
+                    <div
+                        id="rulesOverallPrize"
+                        class="prize-value"
+                    >
+                        —
                     </div>
 
                     <p>
@@ -147,22 +161,31 @@
                         Period Competition
                     </h4>
 
-                    <div class="prize-percentage">
-                        40%
+                    <div
+                        id="rulesPeriodPercent"
+                        class="prize-percentage"
+                    >
+                        —
                     </div>
 
-                    <div class="prize-value">
-                        £260
+                    <div
+                        id="rulesPeriodFund"
+                        class="prize-value"
+                    >
+                        —
                     </div>
 
                     <p>
                         The period prize fund is split across
-                        the 10 competition periods.
+                        the
+                        <span id="rulesPeriodCount">—</span>
+                        competition periods.
                     </p>
 
                     <p>
-                        At the current 13-player entry this is
-                        <strong>£26 per period</strong>.
+                        At the current entry this is
+                        <strong id="rulesPeriodPrize">—</strong>
+                        per period.
                     </p>
 
                 </article>
@@ -174,12 +197,18 @@
                         Highest Scoring Gameweek
                     </h4>
 
-                    <div class="prize-percentage">
-                        10%
+                    <div
+                        id="rulesHighestGameweekPercent"
+                        class="prize-percentage"
+                    >
+                        —
                     </div>
 
-                    <div class="prize-value">
-                        £65
+                    <div
+                        id="rulesHighestGameweekPrize"
+                        class="prize-value"
+                    >
+                        —
                     </div>
 
                     <p>
@@ -197,12 +226,18 @@
                         Mystery Captain Prize
                     </h4>
 
-                    <div class="prize-percentage">
-                        10%
+                    <div
+                        id="rulesCaptainPercent"
+                        class="prize-percentage"
+                    >
+                        —
                     </div>
 
-                    <div class="prize-value">
-                        £65
+                    <div
+                        id="rulesCaptainPrize"
+                        class="prize-value"
+                    >
+                        —
                     </div>
 
                     <p>
@@ -376,7 +411,10 @@
 
             <p>
                 Entry remains
-                <strong>£50 for the season</strong>.
+                <strong>
+                    <span id="rulesJoiningEntryFee">—</span>
+                    for the season
+                </strong>.
             </p>
 
         </section>
@@ -386,6 +424,14 @@
 
 
 </main>
+
+    <script
+        src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+    ></script>
+
+    <script src="js/supabase.js"></script>
+
+    <script src="js/rules.js"></script>
 
 
 </body>

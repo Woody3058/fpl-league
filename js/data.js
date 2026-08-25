@@ -202,7 +202,24 @@ async function getSeasonScores(
                 ),
 
             note:
-                row.note
+                row.note,
+
+            captainName:
+                row.captain_name,
+
+            captainPoints:
+                row.captain_points !== null
+                    ? Number(
+                        row.captain_points
+                    )
+                    : null,
+
+            captainMultiplier:
+                row.captain_multiplier !== null
+                    ? Number(
+                        row.captain_multiplier
+                    )
+                    : null
 
         })
     );
