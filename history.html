@@ -1,233 +1,330 @@
-
 <!DOCTYPE html>
 
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
+
     <meta
         name="viewport"
-        content="width=device-width, initial-scale=1.0">
+        content="width=device-width, initial-scale=1.0"
+    >
 
-    <title>FA Cuck Historical Seasons</title>
+    <title>
+        FA Cuck Historical Seasons
+    </title>
 
     <link
         rel="stylesheet"
-        href="css/style.css">
+        href="css/style.css?v=1.2"
+    >
+
 </head>
+
 
 <body>
 
-    <header>
-        <h1>FA Cuck FPL League</h1>
 
-        <div>Historical Seasons</div>
-    </header>
+<header>
 
-    <nav class="main-navigation">
-        <a href="index.html">
-            Current Season
-        </a>
+    <h1>
+        FA Cuck FPL League
+    </h1>
 
-        <a
-            href="history.html"
-            class="active">
-            Historical Seasons
-        </a>
+    <div>
+        Historical Seasons
+    </div>
 
-        <a href="rules.html">
-            Rules & Prizes
-        </a>
-    </nav>
-
-    <main>
-        <!-- ======================================
-            SEASON SELECTION
-            ====================================== -->
-        <section>
-            <div class="page-header">
-                <h2>Historical Seasons</h2>
-
-                <div>
-                    <label
-                        for="historySeasonSelector">
-                        
-                    </label>
-
-                    <select id="historySeasonSelector">
-                        <option value="">
-                            Select season
-                        </option>
-                    </select>
-                </div>
-            </div>
-        </section>
-
-        <!-- ======================================
-            OVERALL SEASON TABLE
-            ====================================== -->
-        <section
-            id="historicalOverallSection"
-            style="display:none;">
-
-            <h2>Overall League</h2>
-
-            <div class="table-container">
-                <table
-                    id="historicalOverallTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                Pos
-                            </th>
-
-                            <th>
-                                Player
-                            </th>
-
-                            <th>
-                                Total Points
-                            </th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+</header>
 
 
-        <!-- ======================================
-            PERIOD COMPETITION
-            ====================================== -->
-        <section
-            id="historicalCompetitionSection"
-            style="display:none;">
+<nav class="main-navigation">
 
-            <h2>Period Competition</h2>
+    <a href="index.html">
+        Current Season
+    </a>
 
-            <div class="table-container">
-                <table
-                    id="historicalCompetitionTable">
-                    <thead>
-                        <tr
-                            id="historicalCompetitionHeader">
-                        </tr>
-                    </thead>
+    <a
+        href="history.html"
+        class="active"
+    >
+        Historical Seasons
+    </a>
 
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+    <a href="rules.html">
+        Rules & Prizes
+    </a>
+
+</nav>
 
 
-        <!-- ======================================
-            PERIOD DETAILS
-            ====================================== -->
+<main>
 
-        <section
-            id="historicalPeriodDetailsSection"
-            style="display:none;">
 
-            <div class="page-header">
-                <h2>Period Details</h2>
+    <!-- ======================================
+         SEASON SELECTION
+         ====================================== -->
 
-                <div>
-                    <label
-                        for="historicalPeriodSelector">
-                        Select Period:
-                    </label>
+    <section>
 
-                    <select id="historicalPeriodSelector">
-                    </select>
-                </div>
+        <div class="page-header">
+
+            <h2>
+                Historical Seasons
+            </h2>
+
+
+            <div>
+
+                <label
+                    for="historySeasonSelector"
+                >
+                </label>
+
+                <select id="historySeasonSelector">
+
+                    <option value="">
+                        Select season
+                    </option>
+
+                </select>
+
             </div>
 
-            <div class="table-container">
-                <table
-                    id="historicalPeriodTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                Pos
-                            </th>
+        </div>
 
-                            <th>
-                                Player
-                            </th>
+    </section>
 
-                            <th>
-                                Period Total
-                            </th>
 
-                            <th>
-                                Points
-                            </th>
-                        </tr>
-                    </thead>
+    <!-- ======================================
+         OVERALL SEASON TABLE
+         ====================================== -->
 
-                    <tbody>
-                    </tbody>
-                </table>
+    <section
+        id="historicalOverallSection"
+        style="display:none;"
+    >
+
+        <h2>
+            Overall League
+        </h2>
+
+
+        <div class="table-container">
+
+            <table id="historicalOverallTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Pos
+                        </th>
+
+                        <th>
+                            Player
+                        </th>
+
+                        <th>
+                            Total Points
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================
+         PERIOD COMPETITION
+         ====================================== -->
+
+    <section
+        id="historicalCompetitionSection"
+        style="display:none;"
+    >
+
+        <h2>
+            Period Competition
+        </h2>
+
+
+        <div class="table-container">
+
+            <table id="historicalCompetitionTable">
+
+                <thead>
+
+                    <tr id="historicalCompetitionHeader">
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================
+         PERIOD DETAILS
+         ====================================== -->
+
+    <section
+        id="historicalPeriodDetailsSection"
+        style="display:none;"
+    >
+
+        <div class="page-header">
+
+            <h2>
+                Period Details
+            </h2>
+
+
+            <div>
+
+                <label
+                    for="historicalPeriodSelector"
+                >
+                    Select Period:
+                </label>
+
+                <select id="historicalPeriodSelector">
+                </select>
+
             </div>
-        </section>
+
+        </div>
 
 
-        <!-- ======================================
-            RUNNING STANDINGS
-            ====================================== -->
-        <section
-            id="historicalRunningSection"
-            style="display:none;">
+        <div class="table-container">
 
-            <h2>Running Standings</h2>
+            <table id="historicalPeriodTable">
 
-            <div class="table-container">
-                <table
-                    id="historicalRunningTable">
-                    <thead>
-                        <tr>
-                            <th>
-                                Pos
-                            </th>
+                <thead>
 
-                            <th>
-                                Player
-                            </th>
+                    <tr>
 
-                            <th>
-                                Points
-                            </th>
-                        </tr>
-                    </thead>
+                        <th>
+                            Pos
+                        </th>
 
-                    <tbody>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                        <th>
+                            Player
+                        </th>
 
-        <!-- ======================================
-            MESSAGE
-            ====================================== -->
+                        <th>
+                            Period Total
+                        </th>
 
-        <section
-            id="historicalMessageSection"
-            style="display:none;">
+                        <th>
+                            Points
+                        </th>
 
-            <div id="historicalMessage">
-            </div>
-        </section>
+                    </tr>
 
-    </main>
+                </thead>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase.js"></script>
-    <script src="js/data.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/history.js"></script>
+                <tbody>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================
+         RUNNING STANDINGS
+         ====================================== -->
+
+    <section
+        id="historicalRunningSection"
+        style="display:none;"
+    >
+
+        <h2>
+            Running Standings
+        </h2>
+
+
+        <div class="table-container">
+
+            <table id="historicalRunningTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Pos
+                        </th>
+
+                        <th>
+                            Player
+                        </th>
+
+                        <th>
+                            Points
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+    <!-- ======================================
+         MESSAGE
+         ====================================== -->
+
+    <section
+        id="historicalMessageSection"
+        style="display:none;"
+    >
+
+        <div id="historicalMessage">
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+></script>
+
+<script src="js/supabase.js?v=1.2"></script>
+<script src="js/data.js?v=1.2"></script>
+<script src="js/utils.js?v=1.2"></script>
+<script src="js/history.js?v=1.2"></script>
+
 
 </body>
 
