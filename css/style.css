@@ -326,8 +326,6 @@ th:last-child {
     }
 }
 
-
-
 /* ---------------------------------- GAMEWEEKS PAGE ---------------------------------- */
 
 #gameweekSummarySelector {
@@ -336,8 +334,16 @@ th:last-child {
     font-weight: bold;
 }
 
-/* ----------------------------------- HISTORY PAGE ----------------------------------- */
+@media (max-width: 700px) {
+    #gameweekResultsTable th,
+    #gameweekResultsTable td {
+        width: 90px;
+        min-width: 90px;
+        white-space: nowrap;
+    }
+}
 
+/* ----------------------------------- HISTORY PAGE ----------------------------------- */
 
 .page-header {    
     justify-content: space-between;
