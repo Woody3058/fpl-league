@@ -9,14 +9,14 @@ let selectedHistoricalSeason = null;
 
 async function startupHistory() {
 
+    console.clear();
     console.log("history.js: startupHistory Called");
 
     try {
         await loadHistoricalSeasons();
 
-        document
-            .getElementById("historySeasonSelector")
-            .addEventListener("change", event => {const seasonId = Number(event.target.value);
+        document.getElementById("historySeasonSelector").addEventListener(
+            "change", event => {const seasonId = Number(event.target.value);
 
                 if (!seasonId) {
                     hideHistoricalData();
@@ -27,9 +27,8 @@ async function startupHistory() {
             }
         );
 
-        document
-            .getElementById("historicalPeriodSelector")
-            .addEventListener("change", event => {const periodNumber = Number(event.target.value);
+        document.getElementById("historicalPeriodSelector").addEventListener(
+            "change", event => {const periodNumber = Number(event.target.value);
                 renderHistoricalPeriod(periodNumber);
             }
         );
@@ -38,12 +37,9 @@ async function startupHistory() {
     }
 
     catch(error) {
-
         console.error("Historical startup failed:", error);
-
         showHistoricalMessage("Unable to load historical seasons.");
     }
-
 }
 
 // ==========================================
@@ -52,17 +48,11 @@ async function startupHistory() {
 
 async function loadHistoricalSeasons() {
 
-    console.log(
-        "history.js: loadHistoricalSeasons Called"
-    );
+    console.log("history.js: loadHistoricalSeasons Called");
 
-
-    historicalSeasons =
-        await getSeasons();
-
+    historicalSeasons = await getSeasons();
 
     renderHistoricalSeasonSelector();
-
 }
 
 // ==========================================
@@ -86,15 +76,10 @@ function renderHistoricalSeasonSelector() {
     historicalSeasons.forEach(season => {
 
             const option = document.createElement("option");
-            
-            if (season.id < numberOfSeasons) {     
+
+            if (season.id < numberOfSeasons && !season.active) {     
                 option.value = season.id;
-
-                option.textContent =
-                    season.active
-                        ? `${season.name} (Current)`
-                        : season.name;
-
+                option.textContent = season.name;
                 selector.appendChild(option);
             }
         }
@@ -108,21 +93,13 @@ function renderHistoricalSeasonSelector() {
 async function loadHistoricalSeason(seasonId) {
 
     console.log("history.js: loadHistoricalSeason Called");
-    console.log("Loading historical season:", seasonId);
 
     showHistoricalMessage("Loading historical scores...");
 
-    selectedHistoricalSeason =
-        historicalSeasons.find(
-            season =>
-                season.id ===
-                seasonId
-        );
+    selectedHistoricalSeason = historicalSeasons.find(season => season.id === seasonId);
 
     if (!selectedHistoricalSeason) {
-        showHistoricalMessage(
-            "Season not found."
-        );
+        showHistoricalMessage("Season not found.");
         return;
     }
 
@@ -132,16 +109,11 @@ async function loadHistoricalSeason(seasonId) {
         // PERIOD SCORES
         // ======================================
 
-        const scoreData =
-            await getHistoricalPeriodScores(
-                seasonId
-            );
+        const scoreData = await getHistoricalPeriodScores(seasonId);
 
         if (!scoreData || scoreData.length === 0) {
             hideHistoricalData();
-
             showHistoricalMessage(`No historical period scores are available for ${selectedHistoricalSeason.name}.`);
-
             return;
         }
 
@@ -157,13 +129,10 @@ async function loadHistoricalSeason(seasonId) {
     }
     
     catch(error) {
-
         console.error("Unable to load historical season:", error);
-
         hideHistoricalData();
         showHistoricalMessage("Unable to load historical period scores.");
     }
-
 }
 
 // ==========================================
@@ -175,9 +144,7 @@ function calculateHistoricalCompetition(scoreData) {
     console.log("history.js: calculateHistoricalCompetition Called");
 
     const periodNumbers = [...new Set(scoreData.map(score => score.period))]
-            .sort((a,b) =>
-                    a - b
-            );
+            .sort((a,b) => a - b);
 
     const periods = [];
     const runningTotals = {};
@@ -233,7 +200,6 @@ function calculateHistoricalCompetition(scoreData) {
 
     periodNumbers.forEach(
         periodNumber => {
-
             const periodScores = scoreData.filter(score => score.period === periodNumber)
                     .map(score => ({
                             playerId:
@@ -251,17 +217,10 @@ function calculateHistoricalCompetition(scoreData) {
                     );
 
             const highestTotal = Math.max(...periodScores.map(player => player.periodTotal));
-
             const winners = periodScores.filter(player => player.periodTotal === highestTotal);
-
-            const pointsPerWinner =
-                winners.length > 0
-                    ? 1 /
-                        winners.length
-                    : 0;
+            const pointsPerWinner = winners.length > 0 ? 1 / winners.length : 0;
 
             periodScores.forEach(player => {
-
                     if (player.periodTotal === highestTotal) {                        
                         player.won = true;
                         player.competitionPoints = pointsPerWinner;
@@ -270,10 +229,7 @@ function calculateHistoricalCompetition(scoreData) {
                 }
             );
 
-            periodScores.sort((a, b) =>
-                    b.periodTotal -
-                    a.periodTotal
-            );
+            periodScores.sort((a, b) => b.periodTotal - a.periodTotal);
 
             periods.push({
                 period:
@@ -284,25 +240,17 @@ function calculateHistoricalCompetition(scoreData) {
         }
     );
 
-    const standings = Object.values(runningTotals)
-            .sort((a, b) =>
-                    b.points -
-                    a.points
-            );
+    const standings = Object.values(runningTotals).sort((a, b) => b.points - a.points);
 
-    const overallStandings = Object.values(seasonTotals)
-            .sort((a, b) =>
-                    b.total -
-                    a.total
-            );
-
+    const overallStandings = Object.values(seasonTotals).sort((a, b) => b.total - a.total);
+        
     return {
         periods,
         runningTotals:
             standings,
         overallStandings:
             overallStandings
-    };
+        };
 }
 
 function renderHistoricalOverallLeague() {
@@ -323,17 +271,7 @@ function renderHistoricalOverallLeague() {
             // CALCULATE POSITION
             // ======================================
 
-            /*let position;
-
-            if (previousTotal !== null && player.total === previousTotal) {
-                position = previousPosition;
-            }
-            else {
-                position = index + 1;
-            }*/
-
             const position = getRankedPosition(player.total, index, previousTotal, previousPosition);
-
             previousTotal = player.total;
             previousPosition = position;
 
@@ -347,10 +285,7 @@ function renderHistoricalOverallLeague() {
 
             row.innerHTML = `
                 <td>
-                    ${isWinner
-                        ? `${position}`
-                        : position
-                    }
+                    ${isWinner ? `${position}` : position}
                 </td>
 
                 <td>
@@ -402,9 +337,7 @@ function renderHistoricalCompetition() {
 
     historicalCompetition.periods.forEach(period => {
                 const th = document.createElement("th");
-
                 th.textContent = `P${period.period}`;
-
                 header.appendChild(th);
             }
         );
@@ -443,8 +376,6 @@ function renderHistoricalCompetition() {
         const playerCell = document.createElement("td");
         playerCell.textContent = standing.playerName;
         row.appendChild(playerCell);
-
-            // Periods
 
             historicalCompetition.periods.forEach(period => {
                 const result = period.players.find(player => player.playerId === standing.playerId);
@@ -553,9 +484,7 @@ function renderHistoricalPeriod(periodNumber) {
 
             row.innerHTML = `
                 <td>
-                    ${player.won
-                            ? `${position}`
-                            : position
+                    ${player.won ? `${position}` : position
                     }
                 </td>
 
@@ -625,10 +554,7 @@ function renderHistoricalRunningStandings() {
 
             row.innerHTML = `
                 <td>
-                    ${isLeader
-                        ? `${position}`
-                        : position
-                    }
+                    ${isLeader ? `${position}` : position}
                 </td>
 
                 <td>
@@ -684,7 +610,6 @@ function showHistoricalMessage(text) {
     console.log("history.js: showHistoricalMessage Called");
 
     const section = document.getElementById("historicalMessageSection");
-
     const message = document.getElementById("historicalMessage");
 
     message.textContent = text;

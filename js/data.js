@@ -1,6 +1,10 @@
 
 const appData = {season: null, players: [], scores: [], competitionPeriods: []};
 
+// ==========================================
+// GET DATA FROM THE SUPABASE TABLES
+// ==========================================
+
 async function loadSeasonData() {
 
     console.log("data.js: loadSeasonData Called");
@@ -13,24 +17,11 @@ async function loadSeasonData() {
             getCompetitionPeriods(appData.season.id)
         ]);
 
+    appData.players = players;
+    appData.scores = scores;
+    appData.competitionPeriods = competitionPeriods;
 
-    appData.players =
-        players;
-
-
-    appData.scores =
-        scores;
-
-
-    appData.competitionPeriods =
-        competitionPeriods;
-
-
-    console.log(
-        "Application data loaded:",
-        appData
-    );
-
+    console.log("Application data loaded:");
 }
 
 async function getActiveSeason() {
@@ -67,233 +58,118 @@ async function getActiveSeason() {
 
 }
 
-async function getSeasonPlayers(
-    seasonId
-) {
+async function getSeasonPlayers(seasonId) {
 
-    console.log(
-        "data.js: getSeasonPlayers Called"
-    );
+    console.log("data.js: getSeasonPlayers Called");
 
-
-    const {
-        data,
-        error
-    } =
+    const {data, error} =
         await supabaseClient
             .from("season_players")
             .select(`
                 player_id,
                 fpl_entry_id,
                 fpl_team_name,
-                players (
-                    id,
-                    name
-                )
+                players (id, name)
             `)
-            .eq(
-                "season_id",
-                seasonId
-            )
-            .eq(
-                "active",
-                true
-            )
-            .order(
-                "display_order"
-            );
-
+            .eq("season_id", seasonId)
+            .eq("active", true)
+            .order("display_order");
 
     if (error) {
-
-        console.error(
-            "Error loading season players:",
-            error
-        );
-
+        console.error("Error loading season players:", error);
         throw error;
-
     }
 
-
-    return data.map(
-        row => ({
-
+    return data.map(row => ({
             id:
                 row.player_id,
-
             name:
                 row.players.name,
-
             fplEntryId:
                 row.fpl_entry_id,
-
             fplTeamName:
                 row.fpl_team_name
-
         })
     );
-
 }
 
-async function getSeasonScores(
-    seasonId
-) {
+async function getSeasonScores(seasonId) {
 
-    console.log(
-        "data.js: getSeasonScores Called"
-    );
+    console.log("data.js: getSeasonScores Called");
 
-
-    const {
-        data,
-        error
-    } =
+    const {data, error} =
         await supabaseClient
             .from("gameweek_scores")
             .select("*")
-            .eq(
-                "season_id",
-                seasonId
-            );
-
+            .eq("season_id", seasonId);
 
     if (error) {
-
-        console.error(
-            "Error loading season scores:",
-            error
-        );
-
+        console.error("Error loading season scores:", error);
         throw error;
-
     }
 
-
-    return data.map(
-        row => ({
-
+    return data.map(row => ({
             playerId:
                 row.player_id,
-
             gameweek:
                 row.gameweek,
-
             fplPoints:
-                Number(
-                    row.fpl_points
-                ) || 0,
-
+                Number(row.fpl_points) || 0,
             adjustment:
-                Number(
-                    row.adjustment
-                ) || 0,
-
+                Number(row.adjustment) || 0,
             points:
-                (
-                    Number(
-                        row.fpl_points
-                    ) || 0
-                ) +
-                (
-                    Number(
-                        row.adjustment
-                    ) || 0
-                ),
-
+                (Number(row.fpl_points) || 0) +
+                (Number(row.adjustment) || 0),
             note:
                 row.note,
-
             captainName:
                 row.captain_name,
-
             captainPoints:
                 row.captain_points !== null
-                    ? Number(
-                        row.captain_points
-                    )
+                    ? Number(row.captain_points)
                     : null,
-
             captainMultiplier:
                 row.captain_multiplier !== null
-                    ? Number(
-                        row.captain_multiplier
-                    )
+                    ? Number(row.captain_multiplier)
                     : null
-
         })
     );
-
 }
 
-async function getCompetitionPeriods(
-    seasonId
-) {
+async function getCompetitionPeriods(seasonId) {
 
-    console.log(
-        "data.js: getCompetitionPeriods Called"
-    );
+    console.log("data.js: getCompetitionPeriods Called");
 
-
-    const {
-        data,
-        error
-    } =
+    const {data, error} =
         await supabaseClient
             .from("competition_periods")
             .select("*")
-            .eq(
-                "season_id",
-                seasonId
-            )
-            .order(
-                "period_number"
-            );
-
+            .eq("season_id", seasonId)
+            .order("period_number");
 
     if (error) {
-
-        console.error(
-            "Error loading competition periods:",
-            error
-        );
-
+        console.error("Error loading competition periods:", error);
         throw error;
-
     }
 
-
-    return data.map(
-        row => ({
-
+    return data.map(row => ({
             id:
                 row.period_number,
-
             name:
                 row.name,
-
             start:
                 row.start_gameweek,
-
             end:
                 row.end_gameweek
-
         })
     );
-
 }
 
 async function getSeasons() {
 
-    console.log(
-        "data.js: getSeasons Called"
-    );
+    console.log("data.js: getSeasons Called");
 
-
-    const {
-        data,
-        error
-    } =
+    const {data, error} =
         await supabaseClient
             .from("seasons")
             .select(`
@@ -304,65 +180,36 @@ async function getSeasons() {
                 current_gameweek,
                 active
             `)
-            .order(
-                "season_code",
-                {
-                    ascending: false
-                }
+            .order("season_code", {ascending: false}
             );
 
-
     if (error) {
-
-        console.error(
-            "Error loading seasons:",
-            error
-        );
-
+        console.error("Error loading seasons:", error);
         throw error;
-
     }
 
-
-    return data.map(
-        row => ({
-
+    return data.map(row => ({
             id:
                 row.id,
-
             seasonCode:
                 row.season_code,
-
             name:
                 row.name,
-
             totalGameweeks:
                 row.total_gameweeks,
-
             currentGameweek:
                 row.current_gameweek,
-
             active:
                 row.active
-
         })
     );
-
 }
 
-async function getHistoricalPeriodScores(
-    seasonId
-) {
+async function getHistoricalPeriodScores(seasonId) {
 
-    console.log(
-        "data.js: getHistoricalPeriodScores Called"
-    );
+    console.log("data.js: getHistoricalPeriodScores Called");
 
-
-    const {
-        data,
-        error
-    } =
+    const {data, error} =
         await supabaseClient
             .from("period_scores")
             .select(`
@@ -374,46 +221,55 @@ async function getHistoricalPeriodScores(
                     name
                 )
             `)
-            .eq(
-                "season_id",
-                seasonId
-            )
-            .order(
-                "period"
-            );
-
+            .eq("season_id", seasonId)
+            .order("period");
 
     if (error) {
-
-        console.error(
-            "Error loading historical period scores:",
-            error
-        );
-
+        console.error("Error loading historical period scores:", error);
         throw error;
-
     }
 
-
-    return data.map(
-        row => ({
-
+    return data.map(row => ({
             period:
                 row.period,
-
             periodTotal:
-                Number(
-                    row.period_total
-                ) || 0,
-
+                Number(row.period_total) || 0,
             playerId:
                 row.player_id,
-
             playerName:
                 row.players?.name ??
                 "Unknown"
-
         })
     );
+}
 
+async function getSeasonPrizes(seasonId) {
+
+    console.log("data.js: getSeasonPrizes Called");
+
+    const {data, error} =
+        await supabaseClient
+            .from("season_prize_settings")
+            .select(`
+                entry_fee,
+                overall_percent,
+                period_percent,
+                highest_gameweek_percent,
+                captain_percent
+            `)
+            .eq("season_id", seasonId)
+            .single();
+
+    if (error) {
+        console.error("Error loading season Prizes:", error);
+        throw error;
+    }
+
+    return {
+        entryFee: data.entry_fee,
+        overallPercent: data.overall_percent,
+        periodPercent: data.period_percent,
+        highestGameweekPercent: data.highest_gameweek_percent,
+        captainPercent: data.captain_percent
+    };
 }

@@ -1,17 +1,5 @@
 
-const gameweekPageData = {
-
-    season:
-        null,
-
-    players:
-        [],
-
-    scores:
-        []
-
-};
-
+const gameweekPageData = {season: null, players: [], scores: []};
 
 // ==========================================
 // STARTUP
@@ -19,81 +7,33 @@ const gameweekPageData = {
 
 async function startupGameweeks() {
 
-    console.log(
-        "gameweeks.js: startupGameweeks Called"
-    );
-
+    console.clear();
+    console.log("gameweeks.js: startupGameweeks Called");
 
     try {
+        gameweekPageData.season = await getActiveSeason();
+        gameweekPageData.players = await getSeasonPlayers(gameweekPageData.season.id);
+        gameweekPageData.scores = await getSeasonScores(gameweekPageData.season.id);
 
-        gameweekPageData.season =
-            await getActiveSeason();
-
-
-        gameweekPageData.players =
-            await getSeasonPlayers(
-                gameweekPageData.season.id
-            );
-
-
-        gameweekPageData.scores =
-            await getSeasonScores(
-                gameweekPageData.season.id
-            );
-
-
-        document
-            .getElementById(
-                "gameweekSeasonTitle"
-            )
-            .textContent =
-            gameweekPageData.season.name;
-
+        document.getElementById("gameweekSeasonTitle").textContent = gameweekPageData.season.name;
 
         populateGameweekSummarySelector();
 
-
-        const selector =
-            document.getElementById(
-                "gameweekSummarySelector"
-            );
-
+        const selector = document.getElementById("gameweekSummarySelector");
 
         selector.addEventListener(
-            "change",
-            () => {
-
-                renderGameweekSummary(
-                    Number(
-                        selector.value
-                    )
-                );
-
-            }
+            "change", () => {renderGameweekSummary(Number(selector.value));}
         );
 
+        renderGameweekSummary(gameweekPageData.season.currentGameweek);
 
-        renderGameweekSummary(
-            gameweekPageData.season.currentGameweek
-        );
-
-
-        console.log(
-            "Gameweeks page started successfully."
-        );
-
+        console.log("Gameweeks page started successfully.");
     }
     catch(error) {
-
-        console.error(
-            "Gameweeks page startup failed:",
-            error
-        );
-
+        console.error("Gameweeks page startup failed:", error);
     }
 
 }
-
 
 // ==========================================
 // GAMEWEEK SELECTOR
@@ -101,381 +41,156 @@ async function startupGameweeks() {
 
 function populateGameweekSummarySelector() {
 
-    const selector =
-        document.getElementById(
-            "gameweekSummarySelector"
-        );
+    console.log("gameweeks.js: populateGameweekSummarySelector Called");
 
+    const selector = document.getElementById("gameweekSummarySelector");
 
-    selector.innerHTML =
-        "";
+    selector.innerHTML = "";
 
+    for (let gameweek = 1; gameweek <= gameweekPageData.season.currentGameweek; gameweek++) {
 
-    for (
-        let gameweek = 1;
-        gameweek <=
-            gameweekPageData.season.currentGameweek;
-        gameweek++
-    ) {
+        const option = document.createElement("option");
 
-        const option =
-            document.createElement(
-                "option"
-            );
+        option.value = gameweek;
+        option.textContent = `GW${gameweek}`;
 
-
-        option.value =
-            gameweek;
-
-
-        option.textContent =
-            `GW${gameweek}`;
-
-
-        if (
-            gameweek ===
-            gameweekPageData.season.currentGameweek
-        ) {
-
-            option.selected =
-                true;
-
+        if (gameweek === gameweekPageData.season.currentGameweek) {
+            option.selected = true;
         }
 
-
-        selector.appendChild(
-            option
-        );
-
+        selector.appendChild(option);
     }
-
 }
-
 
 // ==========================================
 // RENDER GAMEWEEK
 // ==========================================
 
-function renderGameweekSummary(
-    gameweek
-) {
+function renderGameweekSummary(gameweek) {
 
-    console.log(
-        "Rendering gameweek:",
-        gameweek
-    );
+    console.log("gameweeks.js: renderGameweekSummary Called");
 
+    document.getElementById("gameweekSelectedNumber").textContent = `GW${gameweek}`;
 
-    document
-        .getElementById(
-            "gameweekSelectedNumber"
-        )
-        .textContent =
-        `GW${gameweek}`;
+    const currentScores = gameweekPageData.scores.filter(score => score.gameweek === gameweek);
 
-
-    const currentScores =
-        gameweekPageData.scores.filter(
-            score =>
-                score.gameweek ===
-                gameweek
-        );
-
-
-    renderGameweekTopScorer(
-        currentScores
-    );
-
-
-    renderGameweekBestCaptain(
-        currentScores
-    );
-
-
-    renderGameweekResults(
-        gameweek,
-        currentScores
-    );
-
+    renderGameweekTopScorer(currentScores);
+    renderGameweekBestCaptain(currentScores);
+    renderGameweekResults(gameweek, currentScores);
 }
-
 
 // ==========================================
 // TOP SCORER
 // ==========================================
 
-function renderGameweekTopScorer(
-    scores
-) {
+function renderGameweekTopScorer(scores) {
 
-    const nameElement =
-        document.getElementById(
-            "gameweekTopScorer"
-        );
+    console.log("gameweeks.js: renderGameweekTopScorer Called");
 
+    const nameElement = document.getElementById("gameweekTopScorer");
+    const detailsElement = document.getElementById("gameweekTopScorerDetails");
 
-    const detailsElement =
-        document.getElementById(
-            "gameweekTopScorerDetails"
-        );
-
-
-    if (
-        scores.length === 0
-    ) {
-
-        nameElement.textContent =
-            "—";
-
-        detailsElement.textContent =
-            "No scores";
-
+    if (scores.length === 0) {
+        nameElement.textContent = "—";
+        detailsElement.textContent = "No scores";
         return;
-
     }
 
+    const highestPoints = Math.max(...scores.map(score => score.points));
+    const leaders = scores.filter(score => score.points === highestPoints);
 
-    const highestPoints =
-        Math.max(
-            ...scores.map(
-                score =>
-                    score.points
-            )
-        );
-
-
-    const leaders =
-        scores.filter(
-            score =>
-                score.points ===
-                highestPoints
-        );
-
-
-    const names =
-        leaders.map(
-            score => {
-
-                const player =
-                    gameweekPageData.players.find(
-                        player =>
-                            player.id ===
-                            score.playerId
-                    );
-
-
+    const names = leaders.map(score => {
+                const player = gameweekPageData.players.find(
+                        player => player.id === score.playerId);
                 return (
                     player?.name ??
                     "Unknown"
                 );
-
             }
         );
 
-
-    nameElement.textContent =
-        names.length > 1
-            ? `Tied: ${names.join(" / ")}`
-            : names[0];
-
-
-    detailsElement.textContent =
-        `${highestPoints} points`;
-
+    nameElement.textContent = names.length > 1 ? `Tied: ${names.join(" / ")}` : names[0];
+    detailsElement.textContent = `${highestPoints} points`;
 }
-
 
 // ==========================================
 // BEST CAPTAIN
 // ==========================================
 
-function renderGameweekBestCaptain(
-    scores
-) {
+function renderGameweekBestCaptain(scores) {
 
-    const nameElement =
-        document.getElementById(
-            "gameweekBestCaptain"
+    console.log("gameweeks.js: renderGameweekBestCaptain Called");
+
+    const nameElement = document.getElementById("gameweekBestCaptain");
+    const detailsElement = document.getElementById("gameweekBestCaptainDetails");
+
+    const validScores = scores.filter(score =>
+                score.captainPoints !== null &&
+                score.captainMultiplier !== null &&
+                score.captainMultiplier !== 3
         );
 
-
-    const detailsElement =
-        document.getElementById(
-            "gameweekBestCaptainDetails"
-        );
-
-
-    const validScores =
-        scores.filter(
-            score =>
-
-                score.captainPoints !==
-                    null &&
-
-                score.captainMultiplier !==
-                    null &&
-
-                score.captainMultiplier !==
-                    3
-        );
-
-
-    if (
-        validScores.length === 0
-    ) {
-
-        nameElement.textContent =
-            "—";
-
-        detailsElement.textContent =
-            "No captain data";
-
+    if (validScores.length === 0) {
+        nameElement.textContent = "—";
+        detailsElement.textContent = "No captain data";
         return;
-
     }
 
+    const highestCaptainPoints = Math.max(...validScores.map(score => score.captainPoints));
+    const leaders = validScores.filter(score => score.captainPoints === highestCaptainPoints);
 
-    const highestCaptainPoints =
-        Math.max(
-            ...validScores.map(
-                score =>
-                    score.captainPoints
-            )
-        );
-
-
-    const leaders =
-        validScores.filter(
-            score =>
-                score.captainPoints ===
-                highestCaptainPoints
-        );
-
-
-    const names =
-        leaders.map(
-            score => {
-
-                const player =
-                    gameweekPageData.players.find(
-                        player =>
-                            player.id ===
-                            score.playerId
-                    );
-
-
+    const names = leaders.map(score => {
+                const player = gameweekPageData.players.find(player => player.id === score.playerId);
                 return (
                     player?.name ??
                     "Unknown"
                 );
-
             }
         );
 
+    nameElement.textContent = names.length > 1 ? `Tied: ${names.join(" / ")}` : names[0];
 
-    nameElement.textContent =
-        names.length > 1
-            ? `Tied: ${names.join(" / ")}`
-            : names[0];
+    const details = leaders.map(score => `${score.captainName ?? "Captain"} · ${score.captainPoints} pts`);
 
-
-    const details =
-        leaders.map(
-            score =>
-                `${score.captainName ?? "Captain"} · ${score.captainPoints} pts`
-        );
-
-
-    detailsElement.textContent =
-        details.join(
-            " / "
-        );
-
+    detailsElement.textContent = details.join(" / ");
 }
 
 // ==========================================
 // GET OVERALL STANDINGS AT GAMEWEEK
 // ==========================================
 
-function getOverallStandingsAtGameweek(
-    gameweek
-) {
+function getOverallStandingsAtGameweek(gameweek) {
 
-    const standings =
-        gameweekPageData.players.map(
-            player => {
+    console.log("gameweeks.js: getOverallStandingsAtGameweek Called");
 
-                const totalPoints =
-                    gameweekPageData.scores
+    const standings = gameweekPageData.players.map(player => {
+                const totalPoints = gameweekPageData.scores
                         .filter(
-                            score =>
-
-                                score.playerId ===
-                                    player.id &&
-
-                                score.gameweek <=
-                                    gameweek
+                            score => score.playerId === player.id && score.gameweek <= gameweek
                         )
-                        .reduce(
-                            (
-                                total,
-                                score
-                            ) =>
-                                total +
-                                score.points,
-                            0
-                        );
-
-
-                return {
-
-                    playerId:
-                        player.id,
-
-                    playerName:
-                        player.name,
-
-                    totalPoints:
-                        totalPoints,
-
-                    position:
-                        null
-
+                        .reduce((total, score) => total + score.points, 0);
+                    return {
+                        playerId:
+                            player.id,
+                        playerName:
+                            player.name,
+                        totalPoints:
+                            totalPoints,
+                        position:
+                            null
                 };
-
             }
         );
-
 
     // ======================================
     // SORT BY OVERALL POINTS
     // ======================================
 
-    standings.sort(
-        (
-            a,
-            b
-        ) => {
-
-            if (
-                b.totalPoints !==
-                a.totalPoints
-            ) {
-
-                return (
-                    b.totalPoints -
-                    a.totalPoints
-                );
-
+    standings.sort((a, b) => {
+            if (b.totalPoints !== a.totalPoints) {
+                return (b.totalPoints - a.totalPoints);
             }
-
-
-            return (
-                a.playerName.localeCompare(
-                    b.playerName
-                )
-            );
-
+            return (a.playerName.localeCompare(b.playerName));
         }
     );
 
@@ -488,232 +203,117 @@ function getOverallStandingsAtGameweek(
     // 1, 2, 3, 3, 5
     // ======================================
 
-    let previousPoints =
-        null;
+    let previousPoints = null;
+    let previousPosition = 0;
 
-    let previousPosition =
-        0;
+    standings.forEach((player, index) => {
+            let position = index + 1;
 
-
-    standings.forEach(
-        (
-            player,
-            index
-        ) => {
-
-            let position =
-                index + 1;
-
-
-            if (
-                previousPoints !== null &&
-                player.totalPoints ===
-                    previousPoints
-            ) {
-
-                position =
-                    previousPosition;
-
+            if (previousPoints !== null && player.totalPoints === previousPoints) {
+                position = previousPosition;
             }
 
-
-            player.position =
-                position;
-
-
-            previousPoints =
-                player.totalPoints;
-
-
-            previousPosition =
-                position;
-
+            player.position = position;
+            previousPoints = player.totalPoints;
+            previousPosition = position;
         }
     );
-
-
     return standings;
-
 }
-
 
 // ==========================================
 // GET PLAYER MOVEMENT
 // ==========================================
 
-function getPlayerMovement(
-    playerId,
-    gameweek
-) {
+function getPlayerMovement(playerId, gameweek) {
+
+    console.log("gameweeks.js: getPlayerMovement Called");
 
     // GW1 has no previous position.
 
-    if (
-        gameweek <= 1
-    ) {
-
+    if (gameweek <= 1) {
         return {
-
             movement:
                 0,
-
             previousPosition:
                 null,
-
             currentPosition:
                 null
-
         };
-
     }
 
+    const currentStandings = getOverallStandingsAtGameweek(gameweek);
+    const previousStandings = getOverallStandingsAtGameweek(gameweek - 1);
+    const currentPlayer = currentStandings.find(player => player.playerId === playerId);
+    const previousPlayer = previousStandings.find(player => player.playerId === playerId);
 
-    const currentStandings =
-        getOverallStandingsAtGameweek(
-            gameweek
-        );
-
-
-    const previousStandings =
-        getOverallStandingsAtGameweek(
-            gameweek - 1
-        );
-
-
-    const currentPlayer =
-        currentStandings.find(
-            player =>
-                player.playerId ===
-                playerId
-        );
-
-
-    const previousPlayer =
-        previousStandings.find(
-            player =>
-                player.playerId ===
-                playerId
-        );
-
-
-    if (
-        !currentPlayer ||
-        !previousPlayer
-    ) {
-
+    if (!currentPlayer || !previousPlayer) {
         return {
-
             movement:
                 0,
-
             previousPosition:
                 null,
-
             currentPosition:
                 null
-
         };
-
     }
-
 
     // Positive number = moved UP.
     //
     // Previous 7th → Current 4th
     // 7 - 4 = +3
 
-    const movement =
-        previousPlayer.position -
-        currentPlayer.position;
-
+    const movement = previousPlayer.position - currentPlayer.position;
 
     return {
-
         movement:
             movement,
-
         previousPosition:
             previousPlayer.position,
-
         currentPosition:
             currentPlayer.position
-
     };
-
 }
 
 // ==========================================
 // FORMAT POSITION MOVEMENT
 // ==========================================
 
-function formatPlayerMovement(
-    movement
-) {
+function formatPlayerMovement(movement) {
 
-    if (
-        movement > 0
-    ) {
+    console.log("gameweeks.js: formatPlayerMovement Called");
 
-        return (
-            `↑ ${movement}`
-        );
-
+    if (movement > 0) {
+        return (`↑ ${movement}`);
     }
 
-
-    if (
-        movement < 0
-    ) {
-
-        return (
-            `↓ ${Math.abs(movement)}`
-        );
-
+    if (movement < 0) {
+        return (`↓ ${Math.abs(movement)}`);
     }
-
 
     return "—";
-
 }
-
 
 // ==========================================
 // RESULTS TABLE
 // ==========================================
 
-function renderGameweekResults(
-    gameweek,
-    scores
-) {
+function renderGameweekResults(gameweek, scores) {
 
-    console.log(
-        "gameweeks.js: renderGameweekResults Called"
-    );
+    console.log("gameweeks.js: renderGameweekResults Called");
 
-
-    const tbody =
-        document.querySelector(
-            "#gameweekResultsTable tbody"
-        );
-
+    const tbody = document.querySelector("#gameweekResultsTable tbody" );
 
     if (!tbody)
         return;
 
-
-    tbody.innerHTML =
-        "";
-
+    tbody.innerHTML = "";
 
     // ==========================================
     // OVERALL STANDINGS AT SELECTED GW
     // ==========================================
 
-    const overallStandings =
-        getOverallStandingsAtGameweek(
-            gameweek
-        );
-
+    const overallStandings = getOverallStandingsAtGameweek(gameweek);
 
     // ==========================================
     // BUILD ROWS
@@ -722,188 +322,92 @@ function renderGameweekResults(
     const rows =
         gameweekPageData.players.map(
             player => {
-
-                const score =
-                    scores.find(
-                        item =>
-                            item.playerId ===
-                            player.id
-                    );
-
-
-                const overall =
-                    overallStandings.find(
-                        item =>
-                            item.playerId ===
-                            player.id
-                    );
-
-
-                const movementData =
-                    getPlayerMovement(
-                        player.id,
-                        gameweek
-                    );
-
+                const score = scores.find(item => item.playerId === player.id);
+                const overall = overallStandings.find(item => item.playerId === player.id);
+                const movementData = getPlayerMovement(player.id, gameweek);
 
                 return {
-
                     playerId:
                         player.id,
-
                     playerName:
                         player.name,
-
                     gameweekPoints:
-                        Number(
-                            score?.points
-                        ) || 0,
-
+                        Number(score?.points) || 0,
                     overallPoints:
-                        Number(
-                            overall?.totalPoints
-                        ) || 0,
-
+                        Number(overall?.totalPoints) || 0,
                     overallPosition:
                         overall?.position ??
                         null,
-
                     movement:
                         movementData.movement,
-
                     captainName:
                         score?.captainName ??
                         null,
-
                     captainPoints:
                         score?.captainPoints ??
                         null,
-
                     captainMultiplier:
                         score?.captainMultiplier ??
                         null
-
                 };
-
             }
         );
-
 
     // ==========================================
     // SORT BY GAMEWEEK SCORE
     // ==========================================
 
-    rows.sort(
-        (
-            a,
-            b
-        ) => {
-
-            if (
-                b.gameweekPoints !==
-                a.gameweekPoints
-            ) {
-
+    rows.sort((a, b) => {
+            if (b.gameweekPoints !==  a.gameweekPoints) {
                 return (
                     b.gameweekPoints -
                     a.gameweekPoints
                 );
-
             }
-
-
             return (
-                a.playerName.localeCompare(
-                    b.playerName
-                )
+                a.playerName.localeCompare(b.playerName)
             );
-
         }
     );
-
 
     // ==========================================
     // GAMEWEEK RESULT POSITIONS
     // ==========================================
 
-    let previousPoints =
-        null;
+    let previousPoints = null;
+    let previousPosition = 0;
 
-    let previousPosition =
-        0;
+    rows.forEach((row, index) => {
+            let position = index + 1;
 
-
-    rows.forEach(
-        (
-            row,
-            index
-        ) => {
-
-            let position =
-                index + 1;
-
-
-            if (
-                previousPoints !== null &&
-                row.gameweekPoints ===
-                    previousPoints
-            ) {
-
-                position =
-                    previousPosition;
-
+            if (previousPoints !== null && row.gameweekPoints === previousPoints) {
+                position = previousPosition;
             }
 
-
-            previousPoints =
-                row.gameweekPoints;
-
-
-            previousPosition =
-                position;
-
+            previousPoints = row.gameweekPoints;
+            previousPosition = position;
 
             // ==================================
             // CAPTAIN DISPLAY
             // ==================================
 
-            let captainText =
-                "—";
+            let captainText = "—";
 
+            if (row.captainName) {
+                captainText = `${row.captainName} ` + `(${row.captainPoints ?? 0} pts)`;
 
-            if (
-                row.captainName
-            ) {
-
-                captainText =
-                    `${row.captainName} ` +
-                    `(${row.captainPoints ?? 0} pts)`;
-
-
-                if (
-                    row.captainMultiplier === 3
-                ) {
-
-                    captainText +=
-                        " · TC";
-
+                if (row.captainMultiplier === 3) {
+                    captainText += " · TC";
                 }
-
             }
-
 
             // ==================================
             // ROW
             // ==================================
 
-            const tr =
-                document.createElement(
-                    "tr"
-                );
-
+            const tr = document.createElement("tr");
 
             tr.innerHTML = `
-
                 <td>
                     ${position}
                 </td>
@@ -917,161 +421,72 @@ function renderGameweekResults(
                 </td>
 
                 <td>
-                    ${
-                        row.overallPosition !== null
-                            ? `${row.overallPosition} · ${row.overallPoints} pts`
-                            : row.overallPoints
+                    ${row.overallPosition !== null ? `${row.overallPosition} · ${row.overallPoints} pts` : row.overallPoints
                     }
                 </td>
 
                 <td>
-                    ${formatPlayerMovement(
-                        row.movement
-                    )}
+                    ${formatPlayerMovement(row.movement)}
                 </td>
 
                 <td>
                     ${captainText}
                 </td>
-
             `;
 
-
-            tbody.appendChild(
-                tr
-            );
-
+            tbody.appendChild(tr);
         }
     );
-
 
     // ==========================================
     // BIGGEST MOVER
     // ==========================================
 
-    renderGameweekBiggestMover(
-        rows,
-        gameweek
-    );
-
+    renderGameweekBiggestMover(rows, gameweek);
 }
 
 // ==========================================
 // BIGGEST MOVER
 // ==========================================
 
-function renderGameweekBiggestMover(
-    rows,
-    gameweek
-) {
+function renderGameweekBiggestMover(rows, gameweek) {
 
-    const nameElement =
-        document.getElementById(
-            "gameweekBiggestMover"
-        );
+    console.log("gameweeks.js: renderGameweekBiggestMover Called");
 
+    const nameElement = document.getElementById("gameweekBiggestMover");
+    const detailsElement = document.getElementById("gameweekBiggestMoverDetails");
 
-    const detailsElement =
-        document.getElementById(
-            "gameweekBiggestMoverDetails"
-        );
-
-
-    if (
-        !nameElement ||
-        !detailsElement
-    ) {
-
+    if (!nameElement || !detailsElement) {
         return;
-
     }
-
 
     // ======================================
     // GW1 HAS NO PREVIOUS STANDINGS
     // ======================================
 
-    if (
-        gameweek <= 1
-    ) {
-
-        nameElement.textContent =
-            "—";
-
-
-        detailsElement.textContent =
-            "Available from GW2";
-
-
+    if (gameweek <= 1) {
+        nameElement.textContent = "—";
+        detailsElement.textContent = "Available from GW2";
         return;
-
     }
-
 
     // ======================================
     // FIND BIGGEST POSITIVE MOVEMENT
     // ======================================
 
-    const biggestMovement =
-        Math.max(
-            ...rows.map(
-                player =>
-                    player.movement
-            )
-        );
+    const biggestMovement = Math.max(...rows.map(player => player.movement));
 
-
-    if (
-        biggestMovement <= 0
-    ) {
-
-        nameElement.textContent =
-            "—";
-
-
-        detailsElement.textContent =
-            "No upward movement";
-
-
+    if (biggestMovement <= 0) {
+        nameElement.textContent = "—";
+        detailsElement.textContent = "No upward movement";
         return;
-
     }
 
+    const movers = rows.filter(player => player.movement === biggestMovement);
+    const names = movers.map(player => player.playerName);
 
-    const movers =
-        rows.filter(
-            player =>
-                player.movement ===
-                biggestMovement
-        );
-
-
-    const names =
-        movers.map(
-            player =>
-                player.playerName
-        );
-
-
-    nameElement.textContent =
-        names.length > 1
-            ? `Tied: ${names.join(" / ")}`
-            : names[0];
-
-
-    detailsElement.textContent =
-        `↑ ${biggestMovement} ` +
-        `${
-            biggestMovement === 1
-                ? "place"
-                : "places"
-        }`;
-
+    nameElement.textContent = names.length > 1 ? `Tied: ${names.join(" / ")}` : names[0];
+    detailsElement.textContent = `↑ ${biggestMovement} ` + `${biggestMovement === 1 ? "place" : "places"}`;
 }
-
-
-// ==========================================
-// START
-// ==========================================
 
 startupGameweeks();
