@@ -419,16 +419,30 @@ function renderHistoricalCompetition() {
 
     const standings = historicalCompetition.runningTotals;
 
+    let previousPoints = null;
+    let previousPosition = 0;
+
     standings.forEach((standing, index) => {
-            const row = document.createElement("tr");
 
-            const positionCell = document.createElement("td");
-            positionCell.textContent = index + 1;
-            row.appendChild(positionCell);
+        const position = getRankedPosition(
+            standing.points,
+            index,
+            previousPoints,
+            previousPosition
+        );
 
-            const playerCell = document.createElement("td");
-            playerCell.textContent = standing.playerName;
-            row.appendChild(playerCell);
+        previousPoints = standing.points;
+        previousPosition = position;
+
+        const row = document.createElement("tr");
+
+        const positionCell = document.createElement("td");
+        positionCell.textContent = position;
+        row.appendChild(positionCell);
+
+        const playerCell = document.createElement("td");
+        playerCell.textContent = standing.playerName;
+        row.appendChild(playerCell);
 
             // Periods
 
@@ -526,7 +540,7 @@ function renderHistoricalPeriod(periodNumber) {
             // CALCULATE POSITION
             // ======================================
 
-            const position = getRankedPosition(player.total, index, previousTotal, previousPosition);
+            const position = getRankedPosition(player.periodTotal, index, previousTotal, previousPosition);
 
             previousTotal = player.periodTotal;
             previousPosition = position;
@@ -591,7 +605,12 @@ function renderHistoricalRunningStandings() {
             // CALCULATE POSITION
             // ======================================
 
-            const position = getRankedPosition(player.total, index, previousTotal, previousPosition);
+            const position = getRankedPosition(
+                player.points,
+                index,
+                previousTotal,
+                previousPosition
+            );
 
             previousTotal = player.points;
             previousPosition = position;

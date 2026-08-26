@@ -3,14 +3,11 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-
     <title>
         FA Cuck FPL League - Gameweeks
     </title>
@@ -19,24 +16,15 @@
         rel="stylesheet"
         href="css/style.css?v=1.2"
     >
-
 </head>
-
 
 <body>
 
-
 <header>
+    <h1>FA Cuck FPL League</h1>
 
-    <h1>
-        FA Cuck FPL League
-    </h1>
-
-    <div id="gameweekSeasonTitle">
-    </div>
-
+    <div id="gameweekSeasonTitle"></div>
 </header>
-
 
 <main>
 
@@ -76,7 +64,6 @@
 
         </nav>
 
-
     <!-- ==================================
          GAMEWEEK SELECTOR
          ================================== -->
@@ -85,16 +72,11 @@
 
         <div class="page-header">
 
-            <h2>
-                Gameweek Summary
-            </h2>
-
+            <h2>Gameweek Summary</h2>
 
             <div>
-
-                <label
-                    for="gameweekSummarySelector"
-                >
+                
+                <label for="gameweekSummarySelector">
                     Gameweek:
                 </label>
 
@@ -107,7 +89,6 @@
 
     </section>
 
-
     <!-- ==================================
          GAMEWEEK HIGHLIGHTS
          ================================== -->
@@ -116,12 +97,9 @@
 
         <div class="season-prize-leader-grid">
 
-
             <article class="season-prize-leader-card">
 
-                <h3>
-                    Top Scorer
-                </h3>
+                <h3>Top Scorer</h3>
 
                 <strong id="gameweekTopScorer">
                     —
@@ -133,12 +111,9 @@
 
             </article>
 
-
             <article class="season-prize-leader-card">
 
-                <h3>
-                    Best Captain
-                </h3>
+                <h3>Best Captain</h3>
 
                 <strong id="gameweekBestCaptain">
                     —
@@ -154,12 +129,9 @@
 
             </article>
 
-
             <article class="season-prize-leader-card">
 
-                <h3>
-                    Biggest Mover
-                </h3>
+                <h3>Biggest Mover</h3>
 
                 <strong id="gameweekBiggestMover">
                     —
@@ -171,12 +143,9 @@
 
             </article>
 
-
             <article class="season-prize-leader-card">
 
-                <h3>
-                    Gameweek
-                </h3>
+                <h3>Gameweek</h3>
 
                 <strong id="gameweekSelectedNumber">
                     —
@@ -188,11 +157,9 @@
 
             </article>
 
-
         </div>
 
     </section>
-
 
     <!-- ==================================
          GAMEWEEK RESULTS
@@ -200,19 +167,13 @@
 
     <section>
 
-        <h2>
-            Gameweek Results
-        </h2>
-
+        <h2>Gameweek Results</h2>
 
         <div class="table-container">
 
             <table id="gameweekResultsTable">
-
                 <thead>
-
                     <tr>
-
                         <th>
                             Pos
                         </th>
@@ -236,33 +197,28 @@
                         <th>
                             Captain
                         </th>
-
                     </tr>
-
                 </thead>
-
 
                 <tbody>
                 </tbody>
-
             </table>
 
         </div>
 
     </section>
 
-
 </main>
 
+    <!-- ==================================
+        SCRIPTS
+        ================================== -->
 
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
-
-<script src="js/supabase.js?v=1.2"></script>
-<script src="js/data.js?v=1.2"></script>
-<script src="js/utils.js?v=1.2"></script>
-<script src="js/gameweeks.js?v=1.2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js?v=1.2"></script>
+    <script src="js/data.js?v=1.2"></script>
+    <script src="js/utils.js?v=1.2"></script>
+    <script src="js/gameweeks.js?v=1.2"></script>
 
 
 </body>

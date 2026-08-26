@@ -2,14 +2,11 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
-
     <meta
         name="viewport"
         content="width=device-width, initial-scale=1.0"
     >
-
     <title>
         FA Cuck FPL League
     </title>
@@ -18,33 +15,21 @@
         rel="stylesheet"
         href="css/style.css?v=1.2"
     >
-
 </head>
 
-
 <body>
-
-
 <header>
+    <h1>FA Cuck FPL League</h1>
 
-    <h1>
-        FA Cuck FPL League
-    </h1>
-
-    <div id="seasonTitle">
-    </div>
-
+    <div id="seasonTitle"></div>
 </header>
 
-
 <main>
-
     <!-- ==================================
          NAVIGATION
          ================================== -->
 
         <nav class="main-navigation">
-
             <a
                 href="index.html"
                 class="nav-current active"
@@ -72,9 +57,7 @@
             >
                 Rules & Prizes
             </a>
-
         </nav>
-
 
     <!-- ==================================
          PRIZE TRACKER
@@ -82,19 +65,13 @@
 
     <section class="season-prize-leaders">
 
-        <h2>
-            Prize Tracker
-        </h2>
-
+        <h2>Prize Tracker</h2>
 
         <div class="season-prize-leader-grid">
 
-
             <article class="season-prize-leader-card">
 
-                <h3>
-                    Overall Leader
-                </h3>
+                <h3>Overall Leader</h3>
 
                 <strong id="overallPrizeLeader">
                     —
@@ -110,12 +87,9 @@
 
             </article>
 
-
             <article class="season-prize-leader-card">
 
-                <h3>
-                    Current Period Leader
-                </h3>
+                <h3>Current Period Leader</h3>
 
                 <strong id="periodPrizeLeader">
                     —
@@ -135,9 +109,7 @@
 
             <article class="season-prize-leader-card">
 
-                <h3>
-                    Highest Scoring Gameweek
-                </h3>
+                <h3>Highest Scoring Gameweek</h3>
 
                 <strong id="highestGameweekLeader">
                     —
@@ -157,9 +129,7 @@
 
             <article class="season-prize-leader-card">
 
-                <h3>
-                    Best Captain Pick
-                </h3>
+                <h3>Best Captain Pick</h3>
 
                 <strong id="captainPrizeLeader">
                     —
@@ -176,11 +146,9 @@
 
             </article>
 
-
         </div>
 
     </section>
-
 
     <!-- ==================================
          OVERALL LEAGUE
@@ -188,21 +156,13 @@
 
     <section>
 
-        <h2>
-            Overall League —
-            <span id="overallLeagueGameweek">
-            </span>
-        </h2>
-
+        <h2>Overall League — <span id="overallLeagueGameweek"></span></h2>
 
         <div class="table-container">
 
             <table id="overallTable">
-
                 <thead>
-
                     <tr>
-
                         <th>
                             Pos
                         </th>
@@ -214,20 +174,16 @@
                         <th>
                             Total
                         </th>
-
                     </tr>
-
                 </thead>
 
                 <tbody>
                 </tbody>
-
             </table>
 
         </div>
 
     </section>
-
 
     <!-- ==================================
          GAMEWEEK PERIOD COMPETITION
@@ -235,46 +191,35 @@
 
     <section>
 
-        <h2>
-            Gameweek Period Competition
-        </h2>
-
+        <h2>Gameweek Period Competition</h2>
 
         <div class="table-container">
 
             <table id="competitionTable">
-
                 <thead>
                 </thead>
 
                 <tbody>
                 </tbody>
-
             </table>
 
         </div>
 
     </section>
 
-
 </main>
 
+    <!-- ==================================
+        SCRIPTS
+        ================================== -->
 
-<!-- ==================================
-     SCRIPTS
-     ================================== -->
-
-<script
-    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
-></script>
-
-<script src="js/supabase.js?v=1.2"></script>
-<script src="js/data.js?v=1.2"></script>
-<script src="js/league.js?v=1.2"></script>
-<script src="js/competitions.js?v=1.2"></script>
-<script src="js/utils.js?v=1.2"></script>
-<script src="js/app.js?v=1.2"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js?v=1.2"></script>
+    <script src="js/data.js?v=1.2"></script>
+    <script src="js/league.js?v=1.2"></script>
+    <script src="js/competitions.js?v=1.2"></script>
+    <script src="js/utils.js?v=1.2"></script>
+    <script src="js/app.js?v=1.2"></script>
 
 </body>
 
