@@ -128,10 +128,6 @@ th:last-child {
    SEASON PRIZE LEADERS
    ========================================== */
 
-.season-prize-leaders {
-    margin-top: 28px;
-}
-
 .season-prize-leader-grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -149,12 +145,12 @@ th:last-child {
 }
 
 .season-prize-leader-card h3 {
-    margin: 0 0 8px;
+    margin: 0 0 0px;
     min-height: 58px;
 }
 
 .season-prize-leader-card strong {
-    font-size: 1.25rem;
+    font-size: 1.0rem;
 }
 
 .season-prize-leader-card span {
