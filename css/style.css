@@ -122,7 +122,7 @@ th:last-child {
     }
 }
 
-/* ---------------------------------- MAIN PAGE ---------------------------------- */
+/* ---------------------------------- CURRENT SEASON PAGE ---------------------------------- */
 
 /* ==========================================
    SEASON PRIZE LEADERS
@@ -154,7 +154,7 @@ th:last-child {
 }
 
 .season-prize-leader-card strong {
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 
 .season-prize-leader-card span {
@@ -164,6 +164,25 @@ th:last-child {
 .season-prize-note {
     margin-top: auto;
     padding-top: 12px;
+}
+
+.season-captain-leader {
+    margin-bottom: 18px;
+}
+
+.season-captain-leader:last-child {
+    margin-bottom: 0;
+}
+
+.season-captain-leader-name {
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.season-captain-leader-details {
+    font-weight: 400;
+    color: #666;
+    font-size: 0.8rem;
 }
 
 /* ==========================================
@@ -192,14 +211,14 @@ th:last-child {
     margin-bottom:10px;
 }
 
-#currentPeriodInfo h3{
+/*#currentPeriodInfo h3{
     margin:0 0 6px;
 }
 
 #currentPeriodInfo p{
     margin:0;
-    font-size:18px;
-}
+    font-size:1.25rem;
+}*/
 
 #competitionTable {
     width: 100%;
@@ -220,7 +239,7 @@ th:last-child {
 #competitionTable th small {
     font-weight: normal;
     opacity: 0.7;
-     font-size: 0.7em;
+     font-size: 0.7rem;
 }
 
 #competitionTable
@@ -241,7 +260,7 @@ th:last-child {
 
 #competitionTable
 .competition-score strong {
-    font-size: 1.05em;
+    font-size: 1.05rem;
 }
 
 #competitionTable
@@ -251,7 +270,7 @@ th:last-child {
 
 #competitionTable
 .competition-winner strong {
-    font-size: 1.15em;
+    font-size: 1.15rem;
 }
 
 #competitionTable
@@ -269,7 +288,7 @@ th:last-child {
 
 #competitionTable
 .competition-total {
-    font-size: 1.15em;
+    font-size: 1.15rem;
 }
 
 /* =================== PERIOD STATUS ======================= */
@@ -277,7 +296,7 @@ th:last-child {
 .competition-period-status {
     display: inline-block;
     margin-top: 4px;
-    font-size: 0.75em;
+    font-size: 0.75rem;
     font-weight: normal;
 }
 
@@ -293,7 +312,7 @@ th:last-child {
     font-weight: bold;
 }
 
-.period-in-progress {
+/*.period-in-progress {
     display: block;
     margin-top: 3px;
     font-size: 10px;
@@ -301,7 +320,7 @@ th:last-child {
     text-transform: none;
     white-space: nowrap;
     opacity: 0.7;
-}
+}*/
 
 /* =================== PERIOD CELLS ======================= */
 
@@ -314,7 +333,7 @@ th:last-child {
 }
 
 .competition-cell-current strong {
-    font-size: 1.1em;
+    font-size: 1.1rem;
 }
 
 @media (max-width: 700px) {
@@ -330,7 +349,7 @@ th:last-child {
 
 #gameweekSummarySelector {
     padding: 5px;
-    font-size: 16px;
+    font-size: 1.0rem;
     font-weight: bold;
 }
 
@@ -341,6 +360,25 @@ th:last-child {
         min-width: 90px;
         white-space: nowrap;
     }
+}
+
+.gameweeks-captain-leader {
+    margin-bottom: 18px;
+}
+
+.gameweeks-captain-leader:last-child {
+    margin-bottom: 0;
+}
+
+.gameweeks-captain-leader-name {
+    font-weight: 700;
+    margin-bottom: 4px;
+}
+
+.gameweeks-captain-leader-details {
+    font-weight: 400;
+    color: #666;
+    font-size: 0.8rem;
 }
 
 /* ----------------------------------- HISTORY PAGE ----------------------------------- */
@@ -354,14 +392,14 @@ th:last-child {
 
 #historySeasonSelector {
     padding: 5px;
-    font-size: 16px;
+    font-size: 1.0rem;
     font-weight: bold;
 }
 
 #historicalPeriodSelector {
     margin-bottom: 20px;
     padding: 5px;
-    font-size: 16px;
+    font-size: 1.0rem;
     font-weight: bold;
 }
 
@@ -414,7 +452,7 @@ th:last-child {
 
 .prize-pot {
     margin: 12px 0;
-    font-size: 42px;
+    font-size: 2.625rem;
     font-weight: 700;
 }
 
@@ -439,14 +477,14 @@ th:last-child {
 }
 
 .prize-percentage {
-    font-size: 16px;
+    font-size: 1.0rem;
     font-weight: 600;
     color: #666;
 }
 
 .prize-value {
     margin: 6px 0 14px;
-    font-size: 30px;
+    font-size: 1.875rem;
     font-weight: 700;
 }
 
@@ -468,7 +506,7 @@ th:last-child {
 }
 
 .period-rules-grid span {
-    font-size: 13px;
+    font-size: 0.8rem;
     color: #666;
 }
 
@@ -494,7 +532,7 @@ th:last-child {
         grid-template-columns: repeat(2, minmax(0, 1fr));}
 
     .prize-pot {
-        font-size: 34px;
+        font-size: 2.125rem;
     }
 }
 

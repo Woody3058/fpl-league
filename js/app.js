@@ -226,24 +226,36 @@ function renderSeasonPrizeLeaders(competition) {
 
         if (highestCaptainPoints === null || captainLeaders.length === 0) {
             captainLeaderElement.textContent = "—";
-            captainDetailsElement.textContent = "No captain data yet";}
+            captainDetailsElement.textContent = "No captain data yet";
+        }
         else {
-            const captainLeaderNames = captainLeaders.map(score => {const player = appData.players.find(
-                                        player => player.id === score.playerId);
-                                    return (player?.name ?? "Unknown");
-                                    }
-                                );
+            captainLeaderElement.innerHTML = "";
 
-            captainLeaderElement.textContent = captainLeaderNames.length > 1 ? `Tied: ${captainLeaderNames.join(" / ")}` : captainLeaderNames[0];
+            captainLeaders.forEach(score => {
+                const player = appData.players.find(player => player.id === score.playerId);
+                const playerName = player?.name ?? "Unknown";
 
-            const captainDetails = captainLeaders .map(score => {
-                            return (
-                                `${score.captainName ?? "Captain"} · ` +
-                                `GW${score.gameweek} · ` +
-                                `${score.captainPoints} points`);})
-                            .join(" / ");
+                const playerBlock = document.createElement("div");
+                playerBlock.className = "season-captain-leader";
 
-            captainDetailsElement.textContent = captainDetails;
+                const nameElement = document.createElement("div");
+                nameElement.className = "season-captain-leader-name";
+                nameElement.textContent = playerName;
+
+                const detailsElement = document.createElement("div");
+                detailsElement.className = "season-captain-leader-details";
+                detailsElement.textContent =
+                    `${score.captainName ?? "Captain"} · ` +
+                    `GW${score.gameweek} · ` +
+                    `${score.captainPoints} points`;
+
+                playerBlock.appendChild(nameElement);
+                playerBlock.appendChild(detailsElement);
+
+                captainLeaderElement.appendChild(playerBlock);
+            });
+
+            captainDetailsElement.textContent = "";
         }
     }
 }
