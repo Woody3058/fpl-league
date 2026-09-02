@@ -403,6 +403,7 @@ th:last-child {
     padding: 5px;
     font-size: 1.0rem;
     font-weight: bold;
+    width: 30%;
 }
 
 #historicalCompetitionTable small {
@@ -413,6 +414,10 @@ th:last-child {
 }
 
 @media (max-width: 700px) {
+
+    #historySeasonSelector {
+        padding: 10px;
+    }
     #historicalCompetitionTable th,
     #historicalCompetitionTable td {
         width: 90px;
