@@ -1,9 +1,7 @@
 
 const appData = {season: null, players: [], scores: [], competitionPeriods: []};
 
-// ==========================================
-// GET DATA FROM THE SUPABASE TABLES
-// ==========================================
+// =============== GET DATA FROM THE SUPABASE TABLES ===============
 
 async function loadSeasonData() {
 

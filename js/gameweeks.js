@@ -1,9 +1,7 @@
 
 const gameweekPageData = {season: null, players: [], scores: []};
 
-// ==========================================
-// STARTUP
-// ==========================================
+// =========================== STARTUP ===========================
 
 async function startupGameweeks() {
 
@@ -35,9 +33,7 @@ async function startupGameweeks() {
 
 }
 
-// ==========================================
-// GAMEWEEK SELECTOR
-// ==========================================
+// ====================== GAMEWEEK SELECTOR ======================
 
 function populateGameweekSummarySelector() {
 
