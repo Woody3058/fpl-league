@@ -333,17 +333,16 @@ th:last-child {
 .gameweek-summary-selector {
     display: flex;
     align-items: center;
-    gap: 10px;
     font-weight: 600;
     font-size: 1.3rem;
     margin-bottom: 18px;
+    gap: 10px;
 }
 
 .gameweek-summary-selector select {
     font-weight: 600;
     padding: 5px 20px;
     font-size: 1.3rem;
-
 }
 
 .gameweeks-captain-leader {
@@ -375,6 +374,22 @@ th:last-child {
         gap: 12px;
     }
 
+    .gameweek-summary-selector {
+        width: 100%;
+    }
+
+    .gameweek-summary-selector label {
+        display: none;
+    }
+
+    .gameweek-summary-selector select {
+        width: 100%;
+        height: 56px;
+        border: 1px solid #c8ccd2;
+        background-color: #fff;
+        border-radius: 8px;
+    }
+
     #gameweekResultsTable th,
     #gameweekResultsTable td {
         width: 90px;
@@ -385,25 +400,25 @@ th:last-child {
 
 /* ----------------------------------- HISTORY PAGE ----------------------------------- */
 
-.page-header {    
-    justify-content: space-between;
+.history-page-header {
+    display: flex;
     align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
+    justify-content: space-between;
 }
 
-#historySeasonSelector {
-    padding: 5px;
-    font-size: 1.0rem;
-    font-weight: bold;
+.history-season-selector {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-bottom: 18px;
+    gap: 10px;
 }
 
-#historicalPeriodSelector {
-    margin-bottom: 20px;
-    padding: 5px;
-    font-size: 1.0rem;
-    font-weight: bold;
-    width: 30%;
+.history-season-selector select {
+    font-weight: 600;
+    padding: 5px 20px;
+    font-size: 1.3rem;
 }
 
 #historicalCompetitionTable small {
@@ -415,9 +430,24 @@ th:last-child {
 
 @media (max-width: 700px) {
 
-    #historySeasonSelector {
-        padding: 10px;
+    .history-page-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
     }
+
+    .history-season-selector {
+        width: 100%;
+    }
+
+    .history-season-selector select {
+        width: 100%;
+        height: 56px;
+        border: 1px solid #c8ccd2;
+        background-color: #fff;
+        border-radius: 8px;
+    }
+
     #historicalCompetitionTable th,
     #historicalCompetitionTable td {
         width: 90px;
