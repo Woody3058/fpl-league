@@ -368,6 +368,13 @@ th:last-child {
 /* ------------------------------ GAMEWEEKS PAGE - MOBILE ----------------------------- */
 
 @media (max-width: 700px) {
+
+    .gameweek-summary-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
     #gameweekResultsTable th,
     #gameweekResultsTable td {
         width: 90px;
