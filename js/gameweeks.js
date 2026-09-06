@@ -309,10 +309,8 @@ function getOverallStandingsAtGameweek(gameweek) {
 
     const standings = gameweekPageData.players.map(player => {
                 const totalPoints = gameweekPageData.scores
-                        .filter(
-                            score => score.playerId === player.id && score.gameweek <= gameweek
-                        )
-                        .reduce((total, score) => total + score.points, 0);
+                        .filter(score => score.playerId === player.id && score.gameweek <= gameweek)
+                        .reduce((total, score) => total + score.points - (score.transferCost || 0), 0);
                     return {
                         playerId:
                             player.id,

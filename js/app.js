@@ -46,7 +46,8 @@ function renderSeasonPrizeLeaders(competition) {
 
         const playerTotals = appData.players.map(player => {const total = appData.scores
                                 .filter(score => score.playerId === player.id)
-                                .reduce((sum, score) => sum + score.points, 0);
+                                //.reduce((sum, score) => sum + score.points, 0);
+                                .reduce((sum, score) => sum + score.points - (score.transferCost || 0), 0);
                             return {
                                 playerId: player.id,
                                 playerName: player.name,
@@ -306,7 +307,8 @@ function getOverallLeague(players, scores) {
 
     const league = players.map(player => {
                 const total = scores.filter(score => score.playerId === player.id)
-                        .reduce((sum, score) => sum + score.points, 0);
+                        //.reduce((sum, score) => sum + score.points, 0);
+                        .reduce((sum, score) => sum + score.points - (score.transferCost || 0), 0);
                     return {
                         id:
                             player.id,
@@ -643,7 +645,8 @@ function calculatePeriodCompetition(season, players, scores) {
                         score =>
                             score.playerId ===  player.id && score.gameweek >=  period.startGameweek && score.gameweek <= period.endGameweek);
 
-                        const points = playerScores.reduce((total, score) => total + score.points, 0);
+                        //const points = playerScores.reduce((total, score) => total + score.points, 0);
+                        const points = playerScores.reduce((total, score) => total + score.points - (score.transferCost || 0), 0);
 
                         return {
                             playerId:

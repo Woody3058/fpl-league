@@ -107,29 +107,16 @@ async function getSeasonScores(seasonId) {
     }
 
     return data.map(row => ({
-            playerId:
-                row.player_id,
-            gameweek:
-                row.gameweek,
-            fplPoints:
-                Number(row.fpl_points) || 0,
-            adjustment:
-                Number(row.adjustment) || 0,
-            points:
-                (Number(row.fpl_points) || 0) +
-                (Number(row.adjustment) || 0),
-            note:
-                row.note,
-            captainName:
-                row.captain_name,
-            captainPoints:
-                row.captain_points !== null
-                    ? Number(row.captain_points)
-                    : null,
-            captainMultiplier:
-                row.captain_multiplier !== null
-                    ? Number(row.captain_multiplier)
-                    : null
+            playerId: row.player_id,
+            gameweek: row.gameweek,
+            fplPoints: Number(row.fpl_points) || 0,
+            transferCost: Number(row.transfer_cost) || 0,
+            adjustment: Number(row.adjustment) || 0,
+            points: (Number(row.fpl_points) || 0) + (Number(row.adjustment) || 0),
+            note: row.note,
+            captainName: row.captain_name,
+            captainPoints: row.captain_points !== null ? Number(row.captain_points) : null,
+            captainMultiplier: row.captain_multiplier !== null ? Number(row.captain_multiplier) : null
         })
     );
 }
