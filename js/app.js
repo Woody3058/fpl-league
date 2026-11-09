@@ -453,20 +453,20 @@ function renderCompetition(competition) {
     // SORT PLAYERS
     // ==========================================
     //
-    // 1. Period wins
-    // 2. Current period score
+    // 1. Current period score
+    // 2. Period wins
     // 3. Player name
     // ==========================================
 
     players.sort((a, b) => {
 
-            if (b.total !== a.total) {
-                return (b.total - a.total);
-            }
-
             if (b.currentPeriodPoints !== a.currentPeriodPoints) {
                 return (b.currentPeriodPoints - a.currentPeriodPoints
                 );
+            }
+
+            if (b.total !== a.total) {
+                return (b.total - a.total);
             }
 
             return (a.playerName.localeCompare( b.playerName));
@@ -552,7 +552,7 @@ function renderCompetition(competition) {
                         html += `
                             <td class="competition-winner competition-cell-${periodStatus}">
                                 <strong>
-                                    ${periodPlayer.points} pts
+                                    ${periodPlayer.points}
                                 </strong>
                             </td>
                         `;

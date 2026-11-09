@@ -23,7 +23,7 @@ header h1 {
 }
 
 main {
-    max-width: 1100px;
+    max-width: 1200px;
     margin: 30px auto;
     padding: 0 20px;
 }
@@ -120,6 +120,135 @@ th:last-child {
 
 /* --------------------------------------------------------- CURRENT SEASON PAGE --------------------------------------------------------- */
 
+/* ==========================================
+   PERIOD COMPETITION TABLE
+   ========================================== */
+
+#currentPeriodCard{
+    background:#10003c;
+    color:white;
+}
+
+#currentPeriodCard h2{
+    color:rgb(255, 255, 255);
+    margin-bottom:10px;
+}
+
+#competitionTable {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#competitionTable th,
+#competitionTable td {
+    padding: 10px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+#competitionTable th {
+    font-weight: bold;
+}
+
+#competitionTable th small {
+    font-weight: normal;
+    opacity: 0.7;
+     font-size: 0.7rem;
+}
+
+#competitionTable
+.competition-player {
+    text-align: left;
+    font-weight: 500;
+}
+
+#competitionTable
+.competition-position {
+    width: 50px;
+}
+
+#competitionTable
+.competition-empty {
+    opacity: 0.4;
+}
+
+#competitionTable
+.competition-score strong {
+    font-size: 1.05rem;
+}
+
+#competitionTable
+.competition-winner {
+    font-weight: bold;
+}
+
+#competitionTable
+.competition-winner strong {
+    font-size: 1.0rem;
+}
+
+#competitionTable
+.competition-winner span {
+    margin-left: 4px;
+}
+
+#competitionTable
+.competition-winner small {
+    display: block;
+    font-weight: normal;
+    opacity: 0.7;
+    margin-top: 3px;
+}
+
+#competitionTable
+.competition-total {
+    font-size: 1.15rem;
+}
+
+/* =================== PERIOD STATUS ======================= */
+
+.competition-period-status {
+    display: inline-block;
+    margin-top: 4px;
+    font-size: 0.75rem;
+    font-weight: normal;
+}
+
+.competition-period-future {
+    opacity: 0.45;
+}
+
+.competition-period-completed {
+    opacity: 0.8;
+}
+
+.competition-period-current {
+    font-weight: bold;
+}
+
+/* =================== PERIOD CELLS ======================= */
+
+.competition-cell-future {
+    opacity: 0.45;
+}
+
+.competition-cell-current {
+    font-weight: bold;
+}
+
+.competition-cell-current strong {
+    font-size: 1.1rem;
+}
+
+@media (max-width: 700px) {
+    #competitionTable th,
+    #competitionTable td {
+        width: 90px;
+        min-width: 90px;
+        white-space: nowrap;
+    }
+}
+
 /* =================================== SEASON PRIZE LEADERS ==================================== */
 
 .season-prize-leader-grid {
@@ -185,135 +314,6 @@ th:last-child {
 
 @media (max-width: 700px) {
     .season-prize-leader-grid {grid-template-columns: 1fr;}
-}
-
-/* ==========================================
-   PERIOD COMPETITION TABLE
-   ========================================== */
-
-#currentPeriodCard{
-    background:#10003c;
-    color:white;
-}
-
-#currentPeriodCard h2{
-    color:rgb(255, 255, 255);
-    margin-bottom:10px;
-}
-
-#competitionTable {
-    width: 100%;
-    border-collapse: collapse;
-}
-
-#competitionTable th,
-#competitionTable td {
-    padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid #ddd;
-}
-
-#competitionTable th {
-    font-weight: bold;
-}
-
-#competitionTable th small {
-    font-weight: normal;
-    opacity: 0.7;
-     font-size: 0.7rem;
-}
-
-#competitionTable
-.competition-player {
-    text-align: left;
-    font-weight: 500;
-}
-
-#competitionTable
-.competition-position {
-    width: 50px;
-}
-
-#competitionTable
-.competition-empty {
-    opacity: 0.4;
-}
-
-#competitionTable
-.competition-score strong {
-    font-size: 1.05rem;
-}
-
-#competitionTable
-.competition-winner {
-    font-weight: bold;
-}
-
-#competitionTable
-.competition-winner strong {
-    font-size: 1.15rem;
-}
-
-#competitionTable
-.competition-winner span {
-    margin-left: 4px;
-}
-
-#competitionTable
-.competition-winner small {
-    display: block;
-    font-weight: normal;
-    opacity: 0.7;
-    margin-top: 3px;
-}
-
-#competitionTable
-.competition-total {
-    font-size: 1.15rem;
-}
-
-/* =================== PERIOD STATUS ======================= */
-
-.competition-period-status {
-    display: inline-block;
-    margin-top: 4px;
-    font-size: 0.75rem;
-    font-weight: normal;
-}
-
-.competition-period-future {
-    opacity: 0.45;
-}
-
-.competition-period-completed {
-    opacity: 0.8;
-}
-
-.competition-period-current {
-    font-weight: bold;
-}
-
-/* =================== PERIOD CELLS ======================= */
-
-.competition-cell-future {
-    opacity: 0.45;
-}
-
-.competition-cell-current {
-    font-weight: bold;
-}
-
-.competition-cell-current strong {
-    font-size: 1.1rem;
-}
-
-@media (max-width: 700px) {
-    #competitionTable th,
-    #competitionTable td {
-        width: 90px;
-        min-width: 90px;
-        white-space: nowrap;
-    }
 }
 
 /* --------------------------------------------------------- GAMEWEEKS PAGE --------------------------------------------------------- */
